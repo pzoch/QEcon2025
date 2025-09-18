@@ -25,3 +25,6 @@ You can also see [here](https://julia.quantecon.org/getting_started_julia/gettin
 
 ## Git 
 You can download Git [here](https://git-scm.com/downloads/win).
+
+## Project management
+See [this repo](https://github.com/jdingel/projecttemplate) by J. Dingel for good workflow practices.
