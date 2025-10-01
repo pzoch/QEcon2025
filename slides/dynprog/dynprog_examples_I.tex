@@ -1,0 +1,249 @@
+\documentclass[11pt,xcolor={dvipsnames},aspectratio=159,hyperref={pdftex,pdfpagemode=UseNone,hidelinks,pdfdisplaydoctitle=true},usepdftitle=false]{beamer}
+\usepackage{presentation}[aspectratio=169]
+\usepackage{math}
+\usepackage{mathtools}
+\usepackage{mleftright}
+\usepackage{algorithm}% http://ctan.org/pkg/algorithms
+\usepackage{algpseudocode}% http://ctan.org/pkg/algorithmicx
+\hypersetup{
+    colorlinks=magenta,
+    linkcolor=magenta,
+    filecolor=magenta,      
+    urlcolor=magenta,
+    }
+% Enter title of presentation PDF:
+\hypersetup{pdftitle={Intro to Dynamic Programming: Examples}}
+
+
+\begin{document}
+% Enter presentation title:
+\title{Intro to Dynamic Programming: Examples}
+\subtitle{Quantitative Economics 2024}
+% Enter presentation information:
+
+% Enter presentation authors:
+\author{Piotr Żoch}%
+% Enter presentation location and date (optional; comment line if not needed):
+\frame{\titlepage}
+
+% Fill out content of presentation:
+\begin{frame}{Introduction}   
+    \begin{itemize}
+        \item Shortest Path
+        \item Tree-cutting
+        \item Resource Extraction
+        \item Neoclassical Growth Model  
+    \end{itemize}
+    \end{frame}
+    
+    \begin{frame}
+        \heading{Shortest Path}
+        \end{frame}
+    
+
+\begin{frame}{Shortest Path}   
+    \begin{itemize}
+    \item  We have a set of nodes, $S$: $s_1, s_2 \ldots, s_{N}$.
+    \item  Let $F_s$ be a set of nodes that can be reached from the node $s$ in one step. 
+    \item  $c\of{s,s'}$ is the cost of moving from node $s$ to node $s'\in F_s$.
+    \item  The goal is to find the shortest path from some starting node to some destination $d$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Shortest Path}   
+    \begin{itemize}
+    \item Let $J\of{s}$ be the length of the shortest path from the node $s$ to the destination. Suppose we know $J\of{s}$ for all $s\in N$.
+    \item Suppose the starting node is $s$. We can find the shortest path by choosing a node $s'$ such that \begin{align*}
+        s' = \argmin_{s'\in F_{s}} c\of{s,s'} + J\of{s'}.
+    \end{align*}
+    \item It must also be the case that \begin{align*}
+        J\of{s} = \min_{s'\in F_{s}} c\of{s,s'} + J\of{s'}
+    \end{align*}
+    \item The above is the \al{Bellman equation} for the shortest path problem.
+    \item \alb{State}: current node, $s$.
+\end{itemize}
+\end{frame}
+ 
+
+\begin{frame}{Shortest Path}   
+    \begin{itemize}
+    \item  If we know $J\of{s}$ for all $s\in S$, we can find the shortest path easily. But we don't know it! 
+    \item  How to find $J$? We only know that $J\of{d} = 0$. 
+    \item  We will start with a guess $J_0\of{s}$ for all $s\in N$: \begin{itemize} 
+        \item $J_0\of{s} = M$ for all $s\neq d$, where $M$ is a very large number;
+        \item $J_0\of{s} = 0$.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Shortest Path}   
+    \begin{itemize}
+    \item We will use the following algorithm: \begin{enumerate}
+    \item Set $k=0$.
+    \item Set $J_{k+1}\of{s} = \min_{s'\in F_s} c\of{s,s'} + J_k\of{s'}$ for all $s\in N$.
+    \item If $J_{k+1} = J_k$, stop. Otherwise, set $k = k+1$ and go to the previous step.
+    \end{enumerate}
+
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+    \heading{Tree-cutting}
+\end{frame}
+
+
+\begin{frame}{Tree-cutting}   
+    \begin{itemize}
+    \item  There is a tree of size $s$. 
+    \item  You can either \alr{cut down}  the tree now and sell the wood or \alb{wait} until next period: \begin{itemize} 
+    \item  If you \alr{cut down}  the tree now, you get $f(s)$ dollars. You do not have the tree anymore. 
+    \item  If you \alb{wait} until the next period, the tree grows to size $s+h$, unless $s = \bar{S}$, which is the maximum size of the tree. If $s=\bar{S}$ the tree stays the same size.
+    \end{itemize}
+    \item  Your objective function is to maximize the present discounted value of money you get from cutting down the tree. 
+    \item  The discount factor is $\frac{1}{1+r}$, where $r>0$ is the interest rate.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Tree-cutting}   
+    \begin{itemize}
+    \item Let $v\of{s}$ be the value function. 
+    \item \alb{State}: the size of the tree, $s$.
+    \item Bellman equation: \begin{align*}
+        v\of{s} = \max\bc{\underbrace{f\of{s}}_{\alr{\text{cut down}}}, \underbrace{\frac{1}{1+r} v\of{\min{\bar{S},s+h}}}_{\alb{\text{wait}}}}.
+    \end{align*}
+    \item We can use value function iteration to solve this problem. 
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Tree-cutting}   
+    \begin{enumerate}
+    \item Suppose that cutting down the tree costs $c>0$ dollars. 
+    \item Suppose that if you wait until the next period, the tree might not grow at all - it happens with probability $p$.
+    \item Suppose that if you wait until the next period, the tree might die which means that you have to cut it down and get only $1/2$ of the value of the tree. It happens with probability $p$.
+    \item Suppose that if you wait until the next period, the tree might become sick which means that it will stop growing. It happens with probability $p$. With probability $q$ a sick tree can recover. 
+    \end{enumerate}
+    \begin{itemize}
+    \item How to modify the Bellman equation? 
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Tree-cutting}   
+    \begin{itemize}
+    \item Suppose that cutting down the tree costs $c>0$ dollars. 
+    \item Bellman equation: \begin{align*}
+        v\of{s} = \max\bc{\underbrace{f\of{s} - c}_{\alr{\text{cut down}}}, \underbrace{\frac{1}{1+r} v\of{\min{\bar{S},s+h}}}_{\alb{\text{wait}}}}.
+    \end{align*}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Tree-cutting}   
+    \begin{itemize}
+    \item Suppose that if you wait until the next period, the tree might not grow at all - it happens with probability $p$.
+    \item Bellman equation: \begin{align*}
+        v\of{s} = \max\bc{\underbrace{f\of{s}}_{\alr{\text{cut down}}}, \underbrace{\frac{1}{1+r} \bs{\bp{1-p} \cdot v\of{\min{\bar{S},s+h}} + p \cdot v\of{s}}}_{\alb{\text{wait}}}}.
+    \end{align*}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Tree-cutting}   
+    \begin{itemize}
+        \item Suppose that if you wait until the next period, the tree might die which means that you have to cut it down and get only $1/2$ of the value of the tree. It happens with probability $p$.
+    \item Bellman equation: \begin{align*}
+        v\of{s} = \max\bc{\underbrace{f\of{s}}_{\alr{\text{cut down}}}, \underbrace{\frac{1}{1+r} \bs{\bp{1-p} \cdot v\of{\min{\bar{S},s+h}} + p \cdot \frac{1}{2} f\of{s}}}_{\alb{\text{wait}}}}.
+    \end{align*}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Tree-cutting}   
+    \begin{itemize}
+        \item Suppose that if you wait until the next period, the tree might become sick which means that it will stop growing. It happens with probability $p$. With probability $q$ a sick tree can recover. 
+        \item Additional state variable - health of the tree. 
+        \item Bellman equation ($H$ is for healthy, $S$ is for sick): \begin{align*}
+        v^H\of{s} &= \max\bc{\underbrace{f\of{s}}_{\alr{\text{cut down}}}, \underbrace{\frac{1}{1+r} \bs{\bp{1-p} \cdot v^H\of{\min{\bar{S},s+h}} + p \cdot \cdot v^S\of{s}}}_{\alb{\text{wait}}}} \\
+        v^S\of{s} &= \max\bc{\underbrace{f\of{s}}_{\alr{\text{cut down}}}, \underbrace{\frac{1}{1+r} \bs{\bp{1-q} \cdot v^S\of{s} + q \cdot v^H\of{\min{\bar{S},s+h}}}}_{\alb{\text{wait}}}} 
+    \end{align*}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \heading{Resource Extraction}
+\end{frame}
+
+
+\begin{frame}{Resource Extraction}
+    \begin{itemize}
+    \item You have a resource of size $s$ that you can extract. $s$ is an integer. 
+    \item The current price of the resource is $p \iid \phi$ with $N$ possible values: $p_1, p_2, \ldots, p_N$. 
+    \item The cost of extracting $x$ units of the resource is $c\of{x}$. Extracting $x$ units of the resource reduces the size of the resource to $s-x$ units next period. It is never possible to extract more than $s$ units of the resource.
+    \item The objective is to maximize the expected present discounted value of the profit from extracting the resource:
+    \begin{align*}
+        \E_0 \sum_{t=0}^\infty \b^t \bp{p_t x_t - c\of{x_t}} 
+    \end{align*}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Resource Extraction}
+    \begin{itemize}
+    \item \alb{State}: the size of the resource, $s$, and the price of the resource, $p$.
+    \item Bellman equation: 
+    \begin{align*}
+        v\of{s,p} = \max_{x\in\bc{0,1,\ldots,s}} \bc{p x - c\of{x} + \b \sum_{p^\prime \in \text{P}} v\of{s-x,p^\prime} \phi\of{p^\prime}}.
+    \end{align*}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+    \heading{Neoclassical Growth Model}
+\end{frame}
+
+\begin{frame}{Neoclassical Growth Model}
+    \begin{itemize}
+    \item A representative agent's problem \begin{align*}
+         \sum_{t=0}^\infty \b^t u\of{c_t}, \quad \text{s.t. } k_{t+1} = f\of{k_t} + \bp{1-\delta} k_t - c_t, \quad k_0 \text{ given}.
+    \end{align*}
+    \item $\beta{\in}\bp{0,1}$ is the discount factor, $c_t\geq0$ is the consumption, $k_{t}\geq 0$ is the stock of capital.
+    \item $u\of{\cdot}$ is the utility function, $f\of{\cdot}$ is the production function, $0<\delta\leq 1$ is the depreciation rate.
+    \item We will assume $u\of{c} = \frac{c^{1-\gamma}}{1-\gamma}$, $f\of{k} = k^\alpha$, with $\gamma>0,\alpha\in\bp{0,1}$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Neoclassical Growth Model}
+    \begin{itemize}
+        \item \alb{State}: the stock of capital, $k$.
+        \item Bellman equation: 
+        \begin{align*}
+            v\of{k} = \max_{c\in \bs{0,f\of{k} + \bp{1-\delta} k}} \bc{u\of{c} + \b v\of{f\of{k} + \bp{1-\delta} k - c}}.
+        \end{align*}
+        \item Alternatively, we can write it as:
+        \begin{align*}
+            v\of{k} = \max_{k'\in \bs{0, f\of{k}+\bp{1-\delta}k}} \bc{u\of{f\of{k} + \bp{1-\delta} k - k'} + \b v\of{k'}}.
+        \end{align*}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Neoclassical Growth Model}
+    \begin{itemize}
+       \item  Note: in the problem itself there is nothing that says there is only a finite number of $k$.
+       \item We will discretize the state space and create a finite grid of $k$: $k_1, k_2, \ldots, k_N$.
+       \item We need to decide on the grid size and the grid points. These are properties of the solution method, not the problem itself! 
+       \item What we will find is only an approximation to the true value and policy function.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Neoclassical Growth Model}
+    \begin{itemize}
+       \item Let $k^*$ be a level of capital that satisfies \begin{align*}
+        1 = \beta \bs{\alpha {k^*}^{\alpha-1} + 1-\delta}.
+       \end{align*}
+       \item In this model we call $k^*$ the \al{steady state} level of capital. If $k_t = k^*$, then $k_{t+1} = k^*$.
+       \item We also know that if we start from $k_0>0$, then $k_t \to k^*$ as $t\to\infty$.
+       \item It makes sense to have a grid that is located around $k^*$.   
+\end{itemize}
+\end{frame}
+
+\end{document}

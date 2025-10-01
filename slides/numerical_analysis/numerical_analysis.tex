@@ -1,0 +1,451 @@
+\documentclass[11pt,xcolor={dvipsnames},aspectratio=159,hyperref={pdftex,pdfpagemode=UseNone,hidelinks,pdfdisplaydoctitle=true},usepdftitle=false]{beamer}
+\usepackage{presentation}[aspectratio=169]
+\usepackage{math}
+\usepackage{mathtools}
+\usepackage{mleftright}
+
+\hypersetup{
+    colorlinks=magenta,
+    linkcolor=magenta,
+    filecolor=magenta,      
+    urlcolor=magenta,
+    }
+% Enter title of presentation PDF:
+\hypersetup{pdftitle={Intro to Scientific Computing}}
+
+\begin{document}
+% Enter presentation title:
+\title{Intro to Scientific Computing}
+\subtitle{Quantitative Economics 2025}
+% Enter presentation information:
+
+% Enter presentation authors:
+\author{Piotr Żoch}%
+% Enter presentation location and date (optional; comment line if not needed):
+\frame{\titlepage}
+
+% Fill out content of presentation:
+\begin{frame}{Introduction}   
+\begin{itemize}
+    \item We will mostly deal with numbers. 
+    \item Important to know how computers store and manipulate them.
+    \item We will also introduce some basic concepts related to numerical analysis.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Floating point numbers}
+    \begin{itemize}
+        \item Floating point numbers are ubiquitous in scientific computing.
+        \item Useful to have a basic understanding of them.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Floating point numbers}
+    \begin{itemize}
+        \item  $\R$ (real numbers) is large, but computers have finite memory.
+        \item We need to find some representation of $\R$.
+        \item Fix a \al{base} $\b$ and integers $p, m, M$. Define a \alb{floating point system} as
+            \begin{align*}
+                 \pm  \bp{\sum_{n=1}^p d_n \b^{-n}} \times  \b^e,
+            \end{align*}                
+            where $d_n\in \bc{0,1,\ldots,\b-1}$, $m\leq e \leq M$.
+            \item We call elements of the \alb{floating point system} \al{floating point numbers} or \al{floats}.
+    \end{itemize}
+    \end{frame}
+
+\begin{frame}{Floating point numbers}
+
+              \begin{align*}
+                    \pm  \bp{\sum_{n=1}^p d_n \b^{-n}} \times  \b^e,\quad \text{            
+                        where $d_n\in \bc{0,1,\ldots,\b-1}$, $m\leq e \leq M$.} 
+            \end{align*}  
+           
+            \begin{itemize}  
+            \item Why \al{``floating point''}? By varying $e$ we can represent numbers by shifting the decimal point. 
+            \vspace{1.5cm}
+            \item Example: Consider $\b=10$ and two numbers $x_1 = 0.12 \times 10^1$ and $x_2 = 0.12 \times 10^2$. 
+            \item[] These are $x_1 = 1\alg{.}200$ and $x_2 = 12\alg{.}00$. The location of the decimal point is different.
+    \end{itemize}
+    \end{frame}
+
+\begin{frame}{Floating point numbers}
+
+    \begin{itemize}  
+    \item Focus on $\beta = 2$. We have \al{binary} floating point numbers.
+    \begin{align*}
+        \# = \ (-1)^{\alr{s}} \ \times \   2^{\alb{e}} \ \times \ 1.\alg{f} , \quad  \alg{f} = \bp{\sum_{n=1}^p d_n 2^{-n}}.
+\end{align*}  
+\item We use the following names:
+\begin{itemize}
+\item $f$ the \alg{mantissa} or \alg{significand};
+\item $e$ is the \alb{exponent};
+\item $p$ is the \al{precision};
+\item $s$ is the \alr{sign}.
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+    \begin{frame}{IEEE 754}
+        \begin{itemize}
+            \item IEEE 754: technical standard for floating-point arithmetic established in 1985 by the Institute of Electrical and Electronics Engineers (IEEE).
+            \item Defines formats for floating point numbers with $\b=2$.
+            \item Two formats: \al{single precision} (stored in 32 bits) and \al{double precision} (stored in 64 bits).
+            \item A bit is a binary digit, i.e., 0 or 1.
+            \item \texttt{Float32} and \texttt{Float64} in Julia.
+        \end{itemize}
+    \end{frame}
+        
+
+
+\begin{frame}{Double precision format}
+\begin{itemize}
+    \item The format for a double precision number is:
+   \begin{align*}
+        \# = (-1)^{\alr{s}} \times 2^{\alb{e}-1023} \times 1.\alg{f}         
+    \end{align*}
+    \item \alr{$s$} is the sign bit (1 bit), \alb{$e$} is the exponent (11 bits), and \alg{$f$} is the fraction (52 bits).
+    \item Note that only combinations of powers of 2 can be expressed exactly.
+    \item Note the bias of 1023 in the exponent.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Double precision format}
+    \begin{itemize}
+    
+        \item Consider the number $1.0$.
+        \item It has $\alr{s = 0}$, $\alb{e = 1023}$, and $\alg{f = 0}$.
+       \begin{align*}
+            1.0 & = (-1)^{\alr{0}} \times 2^{(\alb{1023} -1023)} \times 1.\alg{0}   \\
+                & \rightarrow \underbrace{0}_{\text{sign}}\, \underbrace{\alb{0011 1111 1111}}_{1023 \text{ in base 2}}\, \alg{0000 \ldots 0000}
+        \end{align*}
+    \end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Double precision format}
+    \begin{itemize}
+    
+        \item Consider the number $2.0$.
+        \item It has $\alr{s = 0}$, $\alb{e = 1024}$, and $\alg{f = 0}$.
+       \begin{align*}
+            2.0 & = (-1)^{\alr{0}} \times 2^{(\alb{1024} -1023)} \times 1. \alg{0}   \\
+                & \rightarrow \underbrace{\alr{0}}_{\text{sign}}\, \underbrace{\alb{1000 0000 0000}}_{1024 \text{ in base 2}}\, \alg{0000 \ldots 0000}
+        \end{align*}
+    \end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Double precision format}
+    \begin{itemize}
+    
+        \item Consider the number $0.5$.
+        \item It has $\alr{s = 0}$, $\alb{e = 1022}$, and $\alg{f = 0}$.
+       \begin{align*}
+            0.5 & = (-1)^{\alr{0}} \times 2^{(\alb{1022} -1023)} \times 1.\alg{0}   \\
+                & \rightarrow \underbrace{\alr{0}}_{\text{sign}}\, \underbrace{\alb{0011 1111 1110}}_{1022 \text{ in base 2}}\, \alg{0000 \ldots 0000}
+        \end{align*}
+    \end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Double precision format}
+    \begin{itemize}
+    
+        \item Consider the number $0.2$.
+        \item it has $\alr{s = 0}$, $\alb{e = 1020}$, and $\alg{f = 0.6}$.
+       \begin{align*}
+            0.2 & = (-1)^{\alr{0}} \times \underbrace{ 2^{(\alb{1020} -1023)}}_{=\frac{1}{8}} \times \bp{1+\alg{0.6}}  
+        \end{align*}
+        \item This one \al{does not} have an exact binary representation.
+        \item The problem is $0.6$. How is it represented in binary?
+        \item Note: it is similar to representing 1/3 in the decimal system. 
+    \end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Double precision format}
+    \begin{itemize}
+    
+        \item How to represent fractions (here 0.6) in binary?
+        \begin{enumerate} \item Multiply by 2 ($2\times 0.6 = 1.2$), record the integer part (1)
+        \item Multiply the fraction part by 2 ($2\times 0.2 = 0.4$), record the integer part (0).
+        \item Multiply the fraction part by 2 ($2\times 0.4 = 0.8$), record the integer part (0).
+        \item Multiply the fraction part by 2 ($2\times 0.8 = 1.6$), record the integer part (1).
+        \item Multiply the fraction part by 2 ($2\times 0.6 = 1.2$), record the integer part (1).
+        \item Continue until the fraction part is 0. 
+        \item The binary representation is the integer parts of the results.
+        \end{enumerate}
+       
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Double precision format}
+    \begin{itemize}
+    
+        \item Note that the binary representation of 0.6 is \al{infinite} ($0.\overline{1001}$).
+        \item We use only 52 bits for the fraction part.
+        \item We then write $0.6$ as $0.\underbrace{1001\,1001 \ldots 
+        1010}_{52 \text{ 0s and 1s}}$ where we have rounded the repetitive end to the nearest binary
+        number 1010.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Double precision format}
+    \begin{itemize}
+    
+        \item The largest $e$ value is $1111\,1111\,111 = 2047$. 
+        \begin{itemize}
+            \item When $f = 0$ we use this to represent $\infty$. 
+            \item When $f \neq 0$ we use this to represent NaN (not a number).
+        \end{itemize}
+        \item The largest positive double precision number
+        has $s = 0, e = 2046$,  $f = 1111 \ldots 1111 = 1 - 2^{-52}$. It is $\approx 1.7977 × 10^{308}$ 
+        \item \alb{Overflow} occurs when a number is too big to be represented. 
+        \item Usually the result will be represented as $\infty$.
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Double precision format}
+    \begin{itemize}
+    
+        \item The smallest $e$ value is $0000\,0000\,000 = 0$.
+        \item It is reserved to represent numbers for which representation changes from $1.f$ to $0.f$ (\emph{denormalized numbers})
+        \item The smallest positive double precision number
+        has $s = 0, e = 1$,  $f = 0000 \ldots 0000$. It is $\approx 2.2251 × 10^{-308}$ 
+        \item \alb{Underflow} occurs when a (positive) number is too small to be represented.
+        \item Usually the result will be represented as $0.0$.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Machine epsilon}
+    \begin{itemize}
+    
+        \item \al{Machine epsilon, $\epsilon$} is the distance between $1$ and the next \alb{largest} number that can be represented.
+        \item For any $0<\d < \epsilon\slash 2$ we have $1 + \d$ represented as $1$.
+        \item In double precision: $\epsilon \approx 2.2204 \times 10^{-16}$.
+        \item In Julia \texttt{eps(Float64)}.
+        \item Note: the distance between $1$ and the next \alg{smallest} number (i.e., the number just below 1) is  $\epsilon \slash 2$.
+        \item Generally: numbers in double precision are not equally spaced.
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Digits of precision}
+    \begin{itemize}
+    
+        \item In double precision format we have 52 bits for the \alb{mantissa}.
+        \item $2^{52} = 4,503,599,627,370,496$. We can represent all numbers with 15 digits and some with 16 digits.
+        \item \alb{Exponent} just shifts the decimal point.
+        \item That means doubles have between 15 and 16 digits of precision.
+        \item \al{Implication}: numbers like 10000000000000000001 and 10000000000000000002  are stored as the same float. 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Errors}
+    \begin{itemize}
+    
+        \item \al{Takeaway}: numbers stored on a computer are approximations.
+        \item Let $\tilde{x}$ be the approximation of $x$ (for example, as a floating point number).
+        \item The \al{absolute error} is $|\tilde{x} - x|$.
+        \item The \al{relative error} is $|\tilde{x} - x|\slash |x|$.
+        \vspace{1cm}
+        \item Let $fl\of{x}$ be the floating point representation of $x$.
+        \item We have $fl\of{x} = x(1 + \d)$, with $|\d| \leq \epsilon \slash 2$. $\d$ is the \al{relative error}.
+        \item Similarly, let $\odot$ be $+,-,\cdot,/$. We have $fl\of{x\odot y} = \bp{x\odot y}(1 + \d)$.
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Rounding error}
+    \begin{itemize}
+    
+          \item Suppose we add two numbers $x$ and $y$. The result will be represented as $(x + y)(1 + \d)$. What is $\d$?
+        \begin{align*}
+             (x + y)(1 + \d) &= fl\of{fl\of{x}+fl\of{y}} \\
+             & = fl\of{x(1 + \d_x) + y(1 + \d_y)} \\
+                & = \bs{x(1 + \d_x) + y(1 + \d_y)} (1 + \d_{x+y}) 
+        \end{align*} 
+        so $$\d = \frac{x \d_x + y \d_y + (x+y)\d_{x+y}}{x+y}.$$
+   \end{itemize}
+\end{frame}
+
+\begin{frame}{Rounding error}
+    \begin{itemize}
+     \item Let $|\d_x|, |\d_y|, |\d_{x+y}| \leq \epsilon$. Then 
+     $$ |\d| \leq \frac{|x| + |y| + |x+y|} {|x+y|} \epsilon. $$
+    \item Caution: the relative error can be \alr{much larger} than $\epsilon$.
+    \item \alr{Catastrophic cancellation.}
+    \item This happens when $x\approx -y$.
+   \end{itemize}
+\end{frame}
+
+\begin{frame}{Order of operations might matter}
+    \begin{itemize}
+     \item By representing numbers as floats, operations \alb{cease} to be associative and distributive.
+     \item We do not neccesarily have $(x + y) + z = x + (y + z)$.
+     \item We do not neccesarily have $(x + y) \cdot z = x \cdot z + y \cdot z$.
+     \item Order of operations might matter. Start addition from small numbers.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Example}
+    \begin{itemize}
+     \item Suppose we want find the roots of the quadratic equation $$ax^2 +bx + c = 0.$$
+     \item We could use the formula: $x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$.
+     \item Problems: \begin{enumerate} \item  $b^2$ and $4ac$ might be close to each other. \item If $4ac\approx0$, $b$ and $\sqrt{b^2 - 4ac}$ might be close to each other.
+     \end{enumerate}
+    
+     \item Solution? 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Loss of precision}
+    \begin{itemize}
+
+     \item Interested in solving $x^2 -26x + 1 = 0$. True solution: $$x_1 = 13 - \sqrt{168}\approx 0.03852, \quad x_2 = 13 + \sqrt{168} \approx 25.961. $$
+     \item Assume we use a format  with 5 signiciant digits: $\sqrt{168}$ is represented as $12.961$.
+     \item We calculate the first root as $13.000 - 12.961 = 0.03900$ instead of $0.03852$. 
+     \item Only two digits (0 and 3) are correct. We lost three digits of precision.
+     \item Instead, we can use $13-\sqrt{168} = 
+      \frac{1}{13+\sqrt{168}}$ to get a more accurate result: $0.93852$. 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Condition numbers}
+    \begin{itemize}
+     \item Let $x\in \R$ be data and $f:\R\rightarrow\R$ be a function. 
+     \item Recall we have $fl\of{x} = x(1 + \d)$ with $|\d| \leq \epsilon \slash 2$.
+     \item We are interested in how much the output of $f$ changes when the input changes.
+     \item We can measure it as \begin{align*}
+        \frac{\frac{|f\of{x} - f\of{x(1 + \d)}|}{|f\of{x}|}}{\frac{|x-x(1+\d)|}{|x|}} 
+    \end{align*}
+    \item It looks like elasticity of $f$ with respect to $x$.
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Condition numbers}
+    \begin{itemize}
+     \item The expression can be simplified to \begin{align*}
+     \frac{|f\of{x+\d x}-f\of{x}|}{|\d f\of{x}|}
+     \end{align*}
+    \item Take the limit as $\d \rightarrow 0$ and suppose $f$ is differentiable. We define 
+    the \al{relative condition number} as 
+    \begin{align*}
+        \kappa_f\of{x} = \bigg| \frac{ x f^\prime\of{x}}{f\of{x}} \bigg|
+    \end{align*}
+    \vspace{-1.25cm}
+    \item For small $\d$ we have \begin{align*}
+    \frac{|f\of{x+\d x}-f\of{x}|}{|\d f\of{x}|} \approx \kappa_f\of{x} |\d|.
+    \end{align*}
+     \item The relative perturbation in the input, $\d$, is amplified by the relative condition number.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Condition numbers}
+    \begin{itemize}
+     \item If the relative condition number is large, we call a problem \al{ill-conditioned}. Otherwise, we call it \alb{well-conditioned}.
+     \item In an ill-conditioned problem, small perturbations in the input can lead to large changes in the output. 
+     \item If $\kappa_f\of{x} = 10^k$, you might lose up to $k$ digits of accuracy due to $f$ itself. 
+     \item For example, if $\kappa_f\of{x} = 10^{16}$ \texttt{Float64} is useless. 
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Condition numbers}
+    \begin{itemize}
+     \item Most problems have more than one input and output. 
+     \item We can generalize the concepts of relative condition numbers to accomodate these cases. 
+     \item We will also see later how to extend the concept of condition numbers to matrices.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Condition numbers}
+    \begin{itemize}
+     \item Consider again the quadratic equation $ax^2 +bx + c = 0$. 
+     \item Let's pick one root, $x_1$ and consider what happens to it as we vary $a$. 
+     \item We have $f\of{a} = x_1$ with $f^\prime\of{a} = - \frac{x^2_1}{2 a x_1 + b}$.
+     \item The condition number is \begin{align*}
+         \kappa_f\of{a} = \bigg| \frac{a x_1}{2 a x_1 + b} \bigg| = \bigg| \frac{x_1}{x_1-x_2}\bigg|\end{align*}
+
+    \item The problem is ill-conditioned when $x_1 \approx x_2$.
+    \item Think of the extreme case with a repeated root. 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Little ``Oh'' - Big ``Oh''}
+    \begin{itemize}
+     \item Let $f:\N\rightarrow\R_{+}$ and $g:\N\rightarrow\R_{+}$. 
+     \item We say that $f=\Oc\of{g}$ ($f$ is ``big-Oh'' of $g$) 
+    if there exists $c>0$ and $n_0 \in \N$ such that \begin{align*} 
+    f\of{n} \leq c g\of{n} \text{ for all } n\geq n_0.
+     \end{align*}
+     \item This says that the ratio $f\of{n} \slash g\of{n}$ is bounded from above as $n \to \infty$.
+     \item $f\of{n}$ might be much smaller than $g\of{n}$, this is just a bound. 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Little ``Oh'' - Big ``Oh''}
+    \begin{itemize}
+     \item We say that $f=o\of{g}$ ($f$ is ``little-oh'' of $g$) 
+    if for any $c>0$ there exists $n_0 \in \N$ such that \begin{align*} 
+    f\of{n} \leq c g\of{n} \text{ for all } n\geq n_0.
+    \end{align*}
+     \item For strictly positive $g$ this says that the ratio $f\of{n} \slash g\of{n}$ goes to zero as $n \to \infty$.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Little ``Oh'' - Big ``Oh''}
+    \begin{itemize}
+     \item Let $f\of{n} = a_1 n^3 + b_1 n^2 + c_1 n $ and $g\of{n} = a_2 n^3$.
+     \item We have \begin{align*}
+         \lim_{n\rightarrow\infty}\frac{f\of{n}}{g\of{n}} = \frac{a_1}{a_2}.
+     \end{align*}
+     \item This means that $f = \Oc\of{g}$.
+        \item At the same time $f$ is not $o\of{g}$.
+    \end{itemize}
+    \end{frame}
+
+\begin{frame}{Flops}
+    \begin{itemize}
+     \item A \al{flop} is a \al{floating point operation}.
+     \item We count flops to measure the complexity of an algorithm.
+     \item Suppose $A$ is an $n\times n$ matrix and $b$ is an $n\times 1$ vector.
+     \item We want to calculate $A b$.
+     \item To calculate one element of $A b$: \begin{align*}
+            \sum_{i=1}^n A_{ij} b_j.
+     \end{align*}
+     \item There are $n$ multiplications and $n-1$ additions.
+     \item We need to do it $n$ times. In total we have $n \bp{n + n-1} $ flops, or $\Oc\of{n^2}$.    \end{itemize}
+    \end{frame}
+
+
+\begin{frame}{Flops}
+    \begin{itemize}
+        \item If the run time of an algorithm is dominated by flops, we expect \begin{align*}
+            \text{run time} \approx c \times \text{flops} 
+        \end{align*}
+        for some constant $c$.
+        \item In our example, if $n_1 = 1000$ and $n_2 = 2000$, we expect the run time of the algorithm for $n_2$ to be four times longer than for $n_1$.
+    \end{itemize}
+
+    \end{frame}
+
+    \begin{frame}{Flops}
+        \begin{itemize}
+            \item  Suppose $A,B$ are $n\times n$ matrices. We want to calculate $AB$.
+            \item  To calculate one element of $AB$: \begin{align*}
+                \sum_{k=1}^n A_{ik} B_{kj}.
+            \end{align*}
+            \item There are $n$ multiplications and $n-1$ additions.
+            \item We need to do it $n^2$ times. In total we have $2n^3$ flops, or $\Oc\of{n^3}$.    
+            \item In our example, if $n_1 = 1000$ and $n_2 = 2000$, we expect the run time of the algorithm for $n_2$ to be eight times longer than for $n_1$.
+            \item Matrix multiplication using this algorithm is expected to take $n$ times longer than matrix-vector multiplication.
+        \end{itemize}    
+        \end{frame}
+    
+
+\end{document}

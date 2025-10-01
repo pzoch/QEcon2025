@@ -1,0 +1,159 @@
+
+\documentclass[english,hyperref={pdftex,pdfpagemode=UseNone,hidelinks}]{tufte-handout}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{amsmath}
+\usepackage{math}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage{babel}
+\hypersetup{
+    colorlinks=magenta,
+    linkcolor=magenta,
+    filecolor=magenta,      
+    urlcolor=magenta,
+    }
+\makeatletter
+
+
+
+
+\title{Problem Set 3}
+
+\author{Quantitative Economics, Fall 2024}
+
+
+\makeatother
+
+
+\begin{document}
+\maketitle
+This problem set consists of four problems. Submit your solutions until Jan. 22nd 11:59 PM. You can work in teams of up to three students.   
+
+
+
+\subsection*{Problem 1: Basil's Orchid Quest}
+
+In this problem you will have to set up a Bellman equation for a simple problem. This means that you will have to think carefully about the state variables, the control variables, the transition function, and the objective function and how they all relate to each other. Once you figure out how to write the problem in a recursive form, you will have to solve it numerically.
+
+Basil is an avid gardener and he really wants to obtain a particular rare orchid. He knows that the orchid will be available for sale at a festival in Faraway Town and that there will be 50 vendors possibly selling it. \marginnote{Yes, this is another problem about plants. I like plants. } Basil is willing to pay up to $\$ X$ for that particular orchid, so his utility from getting the orchid is $ \$ X$ minus the price he pays for it and all other costs he incurs during the search, denoted by $ \$ C$.  Basil can approach a vendor and ask whether this vendor has the orchid up for sale or terminate the search and go home. If he decides to go home, his utility is just equal to the negative of all costs he has incurred so far.
+
+Since Basil is quite shy, approaching a vendor and inquiring about the orchid generates a mental cost equivalent to  $ \$ f$. With probability $q$ the vendor will have the orchid and offer it for sale at a random price $ \$ p$. Otherwise, Basil will have to decide again whether to approach another vendor or to terminate the search.
+
+Once Basil receives an offer he can: i) accept it and buy the orchid; ii) reject it and continue / terminate the search. If Basil accepts the offer, he buys the orchid and his search ends. If he rejects the offer, he can choose to approach another vendor or to leave the festival and go home. 
+We assume that everything here happens in a short period of time so there is no discounting. 
+
+In this problem we will assume that all costs and prices are the multiples of $\$ 0.1$. The distribution of prices is such that all prices between $ \$ p_{\min}$ and $\$ p_{\max}$, $p_{\min},p_{\min}+0.1,p_{\min}+0.2,\ldots,p_{\max}$, are equally likely. 
+
+
+\emph{Steps to follow:}
+\begin{enumerate}
+\item Your first task is to write a Bellman equation that represents the Basil's problem. Let $n$ be the number of vendors Basil has approached so far and $v\of{n}$ be the value function at the moment Basil considers whether to approach a next vendor or go home. Write the Bellman equation that represents Basil's problem. Use $v^A\of{n}$ to denote the value function conditional on approaching the $n$-th vendor and $v^T\of{n}$ to denote the value function conditional on terminating the search after approaching $n$ vendors. Use $v^B\of{n,p}$ to denote the value function conditional on buying the orchid from the $n$-th vendor at the price $p$ and going home. 
+\marginnote{It is useful to first draw a graph (a tree) that represents the problem graphically. How do state variables evolve? Important: make sure that you are not counting costs twice. Start by writing down the formula for $v^T\of{n}$ and $v^B\of{n,p}$.}
+
+\item Write a function that solves the Bellman equation. There is more than one way to do this. You can either exploit the fact that the problem is finite and use backward induction, or you can use the value function iteration algorithm. To be more precise: it is possible to use the value function iteration algorithm that converges in just one iteration if you start with $v\of{N}$ and then consider $v\of{N-1},v\of{N-2},\ldots,v\of{0}$. 
+\marginnote{Regardless of how you want to solve the Bellman equation, there should be no random number generation in your function - do not draw any prices or simulate anything.} \marginnote{This problem is simple enough that one can derive closed form solutions, but I do not want you to solve it this way. You are free to do it to check whether your numerical solution is correct, though.} The function should return: \begin{enumerate} 
+    \item the value function (represented as a vector); \item 
+    two function (represented as a vector and a matrix) $$\sigma_{\text{approach}}\of{n},\quad\sigma_{\text{buy}}\of{n,p}.$$ \marginnote{Be careful here: there are $50$ vendors, but you need to consider $51$ possible values of $n$ (from $0$ to $50$). Depending on how you write your code, it might be the case that the $n$-th element of the vector that stores your value function corresponds to having met $n-1$ vendors.} 
+    $\sigma_{\text{approach}}\of{n}$ should be equal to 1, if it is optimal for Basil to approach a next vendor, and 0 if it is optimal to terminate the search;
+    
+    $\sigma_{\text{buy}}\of{n,p}$ should be equal to 1 if Basil would buy the orchid from the $n$-th vendor and when being offered price $p$. The other possible outcome is 0;
+    
+    \item a function that returns the probability that Basil will buy the orchid given $n$ and the expected price he will pay. 
+
+\end{enumerate}
+    
+\item Assume $X = 50, c = 0.5, q = 0.15, p_{min} = 10, p_{max} = 100$ and answer the following questions: \marginnote{You do not need to write new functions that provide answers. It is enough if you submit a clearly commented script.}
+\begin{enumerate}
+\item what is the probability that Basil will buy the orchid?
+\item what is the expected price that Basil will pay for the orchid (conditional on actually buying it)? 
+\item what is the expected number of vendors Basil will approach?
+\item is Basil more or less willing to agree for a higher price as he approaches more vendors?
+\end{enumerate}
+\end{enumerate}
+
+\subsection*{Problem 2: Job search with separations}
+
+In this problem you will study an extension of the job search model we discussed in class. 
+
+There is now probability $p$ that the worker will lose the job at the end of the period and become unemployed next period. If this happens, the worker gets to draw a new wage offer at the beginning of the next period. Let $V^U\of{w}$ be the value of being unemployed and receiving a job offer that pays wage $w$ and $V^E\of{w}$ be the value of being employed and earning $w$.
+
+The Bellman equations are as follows:
+\begin{align*} 
+V^U\of{w} & = \max\bc{V^E\of{w}, c + \beta \sum V^U\of{w'} \pi\of{w'}} \\
+V^E\of{w} & = w + \beta \bs{\bp{1-p} V^E\of{w} + p \sum V^U\of{w'} \pi\of{w'}}.
+\end{align*}
+ \marginnote{Note that the problem we consider in class is a special case of this problem when $p=0$. With $p = 0$ we have $V^E\of{w} = \frac{1}{1-\beta} w$ and $V^U\of{w}$ here corresponds to the value function of the unemployed worker in the model we discussed in class.} 
+
+Use the same parameter values and the wage distribution as in the class. 
+
+\begin{enumerate}
+\item Create a plot that shows how the reservation wage $w^*$ changes with $p$. 
+\item Calculate the probability that an unemployed worker will accept a job. This probability is equal to the probability that $w \geq w^*$. Call it $q$. Create a plot that shows how $q$ changes with $p$. 
+\item Note that an unemployed worker will stay unemployed for exactly one period with the probability $\bp{1-q}q$, for two periods with the probability $\bp{1-q}^2 q$, and so on. This is a geometric probability. Calculate the expected duration of unemployment. Create a plot that shows how the expected duration of unemployment changes with $p$. 
+\end{enumerate}
+
+
+\subsection*{Problem 3: Convergence in the Neoclassical Growth Model}
+
+In this problem you will explore some properties of the Neoclassical Growth Model using the \texttt{ngm.jl} code available on the course website. 
+
+A representative agent solves 
+         \begin{align*}\sum_{t=0}^\infty \b^t u\of{c_t}, \quad \text{s.t. } k_{t+1} = f\of{k_t} + \bp{1-\delta} k_t - c_t, \quad k_0 \text{ given},
+         \end{align*} 
+         
+         where $\beta{\in}\bp{0,1}$ is the discount factor, $c_t\geq0$ is the consumption, $k_{t}\geq 0$ is the stock of capital.  $u\of{\cdot}$ is the period utility function, $f\of{\cdot}$ is the production function, $0<\delta\leq 1$ is the depreciation rate.
+
+We will assume $u\of{c} = \frac{c^{1-\gamma}}{1-\gamma}$, $f\of{k} = k^\alpha$, with $\gamma>0,\alpha\in\bp{0,1}$. In the special case $\gamma=1$, the period utility function is $\ln\of{c}$.
+
+The steady state level of capital $k^*$ satisfies \begin{align*}
+        1 = \beta \bs{\alpha {k^*}^{\alpha-1} + 1-\delta}.
+       \end{align*}
+We can prove that starting from any $k_0>0$, the sequence $\bc{k_t}_{t=0}^\infty$ converges to $k^*$.
+
+Output $y_t$ in this economy is equal to $f\of{k_t}$, investment $i_t$ is equal to $k_{t+1} - \bp{1-\delta} k_t$.
+
+
+Your task is to understand how the economy converges to the steady state. In other words, imagine that there is some low-income country that is below long-run (steady state) level of capital. You are interested in how long it will take for this country to reach the steady state, what determines this speed, and how the economy will behave during this transition.
+
+Note first that the parameters $\beta, \alpha, \delta$ determine the steady state level of capital. The parameter $\gamma$ of the utility function does not enter the expression for $k^*$. However, it will affect the speed of convergence. If $\gamma$ is close to 0, the utility function is close to linear. The agent does not care about the timing of consumption. If $\gamma$ is large, the has a strong smoothing motive. 
+
+
+
+\begin{enumerate} 
+    \item Write a function that returns a table. The table should have values of $\gamma$ in the first column, and the number of periods it takes for the economy to reach a lowest level of capital $k_t$ such that $k^* - k_t < \frac{1}{2} \bp{k^* - k_0}$ for a corresponding value of $\gamma$ in the second column. This number of periods indicates how quickly the economy closes half of the gap between the initial level of capital and the steady state. 
+    \item Write a function that returns a figure with 4 panels, each one showing how a variable of interests changes over time for a vector of values of $\gamma$. Each value of $\gamma$ should correspond to a different line. Make sure that lines are clearly labelled. The variables of interest are: level of capital, level of output, the ratio of investment to output, the ratio of consumption to output.
+    \item Assume $\beta = 0.95, \alpha = 0.3, \delta = 0.05, k_0 = 0.5 \cdot k^*$. Generate the table and the figure mentioned above for three values of $\gamma: 0.5,1,2$. 
+\end{enumerate}
+
+
+\subsection*{Problem 4: Markov dynamics}
+Consider a model with two state variables: $X_t$ and $Z_t$. $Z_t$ is exogenous and follows a Markov process with transition matrix $P$. 
+
+Let $Z_t \in \text{Z} = \{z_1,z_2,z_3\}$ and \begin{align*}
+    P = \begin{pmatrix}
+    0.5 & 0.3 & 0.2 \\
+    0.2 & 0.7 & 0.1 \\
+    0.3 & 0.3 & 0.4
+    \end{pmatrix}.
+\end{align*}
+$X_t \in \text{X}=\{0,1,2,3,4,5\}$ is endogenous. The policy function $X_{t+1}=\sigma\of{X_t,Z_t}$ is given by 
+\begin{align*} \label{eq:policy}
+    \sigma\of{X_t,Z_t} = \begin{cases}
+    0 & \text{if }  Z_t = z_1 \\
+    X_t & \text{if } Z_t = z_2 \\    
+    X_t + 1 & \text{if } Z_t = z_3 \text{ and } X_t \leq 4\\
+    3 & \text{if } Z_t = z_3 \text{ and } X_t = 5    
+    \end{cases}.
+\end{align*}
+
+Write code that takes $P$ and $\sigma\of{X_t,Z_t}$ as inputs and does the following: 
+\begin{enumerate}
+\item obtains and returns the transition matrix for $\bc{X_t,Z_t}$ (jointly);
+\item returns the stationary distribution of $\bc{X_t,Z_t}$ (jointly) and the marginal distribution (stationary) of $X_t$;
+\item calculates and returns the expected value of $X_t$ using the marginal (stationary) distribution. 
+\end{enumerate}
+
+
+\end{document}
+

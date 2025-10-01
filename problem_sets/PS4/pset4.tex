@@ -1,0 +1,67 @@
+
+\documentclass[english,hyperref={pdftex,pdfpagemode=UseNone,hidelinks}]{tufte-handout}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{amsmath}
+\usepackage{math}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage{babel}
+\hypersetup{
+    colorlinks=magenta,
+    linkcolor=magenta,
+    filecolor=magenta,      
+    urlcolor=magenta,
+    }
+\makeatletter
+
+
+
+
+\title{Problem Set 4}
+
+\author{Quantitative Economics, Fall 2024}
+
+
+\makeatother
+
+
+\begin{document}
+\maketitle
+This problem set consists of two problems. Submit your solutions until Feb. 5th 11:59 PM. You can work in teams of up to three students.   
+
+
+
+\subsection*{Problem 1: Root-finding in the Neoclassical Growth Model} 
+
+Recall the Bellman equation for the Neoclassical Growth Model:
+\begin{align*}
+V\of{k} = \max_{k'\in \bs{0,f\of{k} + \bp{1-\delta}k}} u\of{f\of{k} + \bp{1-\delta}k - k'} + \beta V\of{k'}.
+\end{align*}
+
+Here for simplicity we assume there are no shocks to the production function. The parameters are $\beta\in\bp{0,1}$, $\delta\in\bp{0,1}$, $u\of{\cdot}$ is the period utility function, $f\of{\cdot}$ is the production function.
+
+
+First order condition with respect to $k'$ is 
+\begin{align*}
+u'\of{f\of{k} + \bp{1-\delta}k - k'} = \beta V'\of{k'}.
+\end{align*}
+We can thus find the optimal $k'$ for a given $k$ by solving the equation above.
+
+Suppose that we work with a grid of points $\bc{k_i}_{i=1}^n$ and we want to find the optimal $k'$ for each $k_i$. We also have derivatives of $V\of{k}$, $V'\of{k}$ for each $k_i$. We do not know $V'\of{k}$ for an arbitrary $k$, though. We will need to interpolate $V'\of{k}$.
+
+
+Your task is to write a function that takes the following inputs: a tuple \texttt{model}\marginnote{Instead of passing a tuple you can pass a structure and use the \texttt{Parameters.jl} package.} containing the parameters of the model as well as functions $f$ and $u$ (and their derivatives), a vector of  $\bc{k_i}_{i=1}^n$, a vector of $\bc{V'\of{k_i}}_{i=1}^n$. The function should return a vector of $\bc{k'\of{k_i}}_{i=1}^n$, where $k'\of{k_i}$ is the optimal $k'$ for $k_i$. 
+
+Assume that $u\of{\cdot}$ is the CRRA utility function, $u\of{c} = \frac{c^{1-\gamma}}{1-\gamma}$, where $\gamma>0$ is the coefficient of relative risk aversion. Assume that $f\of{k} = k^\alpha$, where $\alpha\in\bp{0,1}$. Use the following parameters: $\alpha = 0.3$, $\beta = 0.96$, $\delta = 0.05$, $\gamma = 2$. Use the following grid of points: $\bc{k_i}_{i=1}^n = \bc{...}$. 
+\begin{enumerate}
+
+\item AAA
+\end{enumerate}
+
+Feel free to embed this function in a full program that solves the Neoclassical Growth Model. \marginnnote{This is not required for the problem set.} You will need to think how to link the function you wrote with the Bellman equation.
+
+
+
+\end{document}
+

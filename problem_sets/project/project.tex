@@ -1,0 +1,128 @@
+
+\documentclass[english,hyperref={pdftex,pdfpagemode=UseNone,hidelinks}]{tufte-handout}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{amsmath}
+\usepackage{math}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage{babel}
+\hypersetup{
+    colorlinks=magenta,
+    linkcolor=magenta,
+    filecolor=magenta,      
+    urlcolor=magenta,
+    }
+\makeatletter
+
+
+
+
+\title{Final Project}
+
+\author{Quantitative Economics, Fall 2025}
+
+
+\makeatother
+
+
+\begin{document}
+\maketitle
+Submit your solutions until Feb. 28th 11:59 PM. You can work in teams of up to three students.   
+
+
+
+\subsection*{Investment subsidy in a heterogeneous firm model } 
+
+
+In this project you will study the effects of an introduction of an investment subsisdy in a heterogeneous firm model
+
+Consider an economy with a continuum of firms indexed by $j\in\bs{0,1}$. The firms maximize the present discounted value of their profits:
+
+\begin{align*}
+\max_{\bc{{i_{j,t},h_{j,t}}}_{t=0}^\infty} \E_0\sum_{t=0}^\infty \bp{\frac{1}{1+r}}^t \pi_{j,t},
+\end{align*}
+where $r >0$ is the real interest rate. Each firm chooses labor input $h_{j,t}$ and investment $i_{j,t}$.  Profits $
+\pi_{j,t}$ are given by 
+\begin{align*}
+\pi_{j,t} = y_{j,t} - w h_{j,t} - C\of{i_{j,t},k_{j,t}}, \quad y_{j,t} = z_{j,t} k_{j,t}^\alpha h_{j,t}^\nu.
+\end{align*}
+Here $y_{i,t}$ is the output of firm $j$ at time $t$, which is produced using a production function with productivity $z_{j,t}$, capital $k_{j,t}$, and labor $h_{j,t}$. with $
+\alpha,\nu\in\bp{0,1}$ and $\alpha + \nu < 1$. $w$ is the wage rate. The function $C\of{i_{j,t},k_{j,t}}$ is the adjustment cost of investment, which will be specified later. 
+
+The capital stock $k_{i,t}$ evolves according to the standard law of motion:
+\begin{align*}
+k_{j,t+1} = (1-\delta) k_{j,t} + i_{j,t},
+\end{align*} where $\delta\in\bp{0,1}$ is the depreciation rate of capital.
+
+Finally, the productivity level $z_{j,t}$ follows an AR(1) process in logs \begin{align*}
+\ln z_{j,t+1} = \rho \ln z_{j,t} + \bp{1-\rho}  \ln \tilde{z} + \epsilon_{j,t+1}, \quad \epsilon_{j,t+1}\sim \mathcal{N}\of{0,\sigma^2},
+\end{align*} where $\rho\in\bp{0,1}$ is the persistence parameter, and $\epsilon_{j,t+1}$ is a shock with mean zero and variance $\sigma^2$. $\tilde{z}$ is a constant that normalizes the productivity level: $\E z_{j,t} = 1$.
+
+
+
+\subsection*{Instructions}
+Our goal is to study the effects of a policy that will be described later and somehow changes the firm's problem. But to make such analysis useful, we need to ensure that the model replicates the observed firm behavior in the data. This behavior will depend on the values of the parameters of the model and we will need to calibrate these parameters.
+
+
+\begin{enumerate}
+    \item Note that the labor demand of the firm does not matter for the dynamics. The optimal choice of labor $h_{j,t}^*$ satisfies \begin{align*} 
+        h_{j,t}^* = \argmax_{h_{j,t}\geq 0} \bp{z_{j,t} k_{j,t}^\alpha h_{j,t}^\nu - w h_{j,t}}.
+    \end{align*} Find the closed form solution for $h_{j,t}^*$ as a function of $z_{j,t}, k_{j,t}, w$. This will allow you to eliminate $h_{j,t}$ from the problem of the firm. Use this to rewrite $\pi_{j,t}$ as a function of $z_{j,t}, k_{j,t}, i_{j,t}$. Note that we assumed the wage rate is constant, so we will suppress is as an argument of the function. \marginnote{This is a common ``trick'' when solving dynamic models -- reduce the complexity of the problem by eliminating variables that can be solved in closed form.} Do profits depend on time $t$, conditional on $z_{j,t}$ and $k_{j,t}$?
+    \item What are the state variables in the problem of the firm? Write down the Bellman equation that corresponds to the problem of the firm. Use $V\of{\cdot}$ to denote the value function. Since firms are fully characterized by $k_{j,t}, z_{j,t}$, you can drop the index $j$. You can keep investment in your expression. \marginnote{No need to eliminate investment from the problem by using the law of motion of capital.} 
+    
+    \item We are ready to assume a function form for the adjustment cost function $C\of{i_{t},k_{t}}$. We will assume that \begin{align*}
+        C\of{i,k} =  i \cdot \mathbb{I}_{\bc{i >  0}} + \lambda 
+        i \cdot \mathbb{I}_{\bc{i < 0}}  + \frac{\phi}{2} \bp{\frac{i}{k}}^2 k + F \cdot \mathbb{I}_{\bc{i \neq 0}}. 
+    \end{align*} 
+    The adjustment cost has several components. When the firm decides to increase its stock of capital ($i > 0$), it pays the full price of investment. But when it decides to reduce its stock of capital ($i < 0$), it receives only a fraction $\lambda$ of the value. 
+    \marginnote{Note that when $i<0$ and $\lambda>0$. this part of the cost is negative, so it can be understood as the revenue from selling capital. In the extreme case of $\lambda=0$, the firms does not get anything from selling capital.} The second term is a quadratic adjustment cost that penalizes rapid changes in the stock of capital. Here $\phi > 0$ is a parameter that captures the size of this cost. Finally, there is a fixed cost $F \geq 0$ that the firm has to pay whenever it decides to invest (or disinvest). This cost does not depend on the size of investment and reflects the idea that investment can distupt the normal operations of the firm or that there are some overhead costs. 
+
+    \item Consider the special case with $\lambda = 1, \phi = 0, F = 0$. In this case, the adjustment cost is simply $C\of{i,k} = i$. This means that the firm pays the full price of investment and receives the full price when it sells capital. Given this, what is the optimal choice of investment as a function of $k,z$? Does the level of capital chosen for the next period depend on the current level of capital? Explain. 
+    \item Consider now $\lambda = 1, \phi = 0, F > 0$. In this case, the adjustment cost is $C\of{i,k} = i + F \cdot \mathbb{I}_{\bc{i \neq 0}}$. What is the optimal choice of investment as a function of $k,z$? Does the level of capital chosen for the next period, conditional on adjusting, depend on the current level of capital? Explain. 
+     
+
+    \item The remaining parameters are are $\beta$, $\tau$, $\delta$ and $A$. These four parameters will have to be pinned down by the following conditions that characterize the economy with $\lambda = 0$: 
+    \begin{enumerate}
+        \item The interest rate $r$ is 0.04.
+        \item The investment to output ratio is 0.2. This ratio is given by $\frac{\delta K}{A K^\alpha L^{1-\alpha}}$. 
+        \item The government purchases  $G$ to output ratio is 0.2. This ratio is given by $\frac{G}{A K^\alpha L^{1-\alpha}}$.
+        \item The wage rate $w$ is 1.
+    \end{enumerate}
+\end{enumerate}
+
+Here are some suggestions how to proceed. In general, when you calibrate the model (when you look for the values of the parameters), it is a good idea to start with the parameters that are easier to find. Notice that the costly part is related to solving the Bellman equation of the household. Notice the following is true for $\lambda = 0$:
+\begin{enumerate}
+    \item If the wage rate is 1, then the average labor income in the economy is 1. This means that $\bar{y} = 1$. Since the labor share in output $1-\alpha$, you can use this information to find the value of output. But then it is easy to find the value of $\tau$ using the information about $G$ to output ratio.
+    \item You know $L=1, w = 1, r = 0.04$. You also know $\alpha$. Use this together with the optimality conditions of the firm and the condition that the investment to output ratio is 0.2 to find the values of $A$ and $\delta$. You will also get the value of $K$.
+    \item Now you can move on to the difficult part. You know that the total asset demand of households has to equal $K$ that you just found. And this has to be the case for $w=1$ and $r=0.04$, and the tax rate $\tau$ you obtained. This means that you will need to find which value of $\beta$ makes this happen.
+\end{enumerate}
+
+
+Now you know the values of all the parameters in the economy with $\lambda=0$. 
+
+To compare it to the economy with $\lambda=0.15$ we will do the following. We want the government to raise the same amount of revenue (or government purchases) to output in both economies. This means that we will have to find the value of $\tau$ that makes this happen. This will be the value of $\tau$ in the economy with $\lambda=0.15$. Important: keep the values of parameters that you found for the economy with $\lambda=0$ fixed. These parameters were $\beta,\gamma,\rho,\tilde{z},\sigma,\alpha,\delta,A,\phi$.  But this does not mean that $w$ and $r$ will be the same in the economy with $\lambda=0.15$. This does not mean that $K$ will be the same, nor that the average labor income will be the same. You will need to solve for the equilibrium prices that clear the markets in the economy with $\lambda=0.15$.
+
+By comparing two economies I mean that you need to report the following statistics of the stationary equilibria of the two economies: \begin{enumerate}
+    \item The equilibrium interest rate $r$.
+    \item The equilibrium wage rate $w$.
+    \item The tax rate $\tau$.
+    \item The ratio of capital to output $\frac{K}{A K^\alpha L^{1-\alpha}}$.
+    \item The Gini coefficient for after-tax labor income.
+    \item The Gini coefficient for assets. 
+\end{enumerate}
+
+You also need to plot: \begin{enumerate}
+    \item Value functions for both economies.
+    \item Policy functions for both economies.
+    \item The marginal distribution of assets for both economies.
+    \item The Lorenz curves for after-tax labor income and assets for both economies.
+\end{enumerate}
+
+You will need to provide both your code and a writeup. The writeup should be no longer than 5 pages. The writeup should show the Bellman equation and discuss how you calibrated the model parameters in detail. It should also discuss the accuracy of the numerical solution. It should contain all the results requested above and a short discussion of economic mechanisms that are at play in the model.
+
+
+\end{document}
+
+
+

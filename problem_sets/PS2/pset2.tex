@@ -1,0 +1,183 @@
+
+\documentclass[english,hyperref={pdftex,pdfpagemode=UseNone,hidelinks}]{tufte-handout}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{amsmath}
+\usepackage{math}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage{babel}
+\hypersetup{
+    colorlinks=magenta,
+    linkcolor=magenta,
+    filecolor=magenta,      
+    urlcolor=magenta,
+    }
+\makeatletter
+
+
+
+
+\title{Problem Set 2}
+
+\author{Quantitative Economics, Fall 2024}
+
+
+\makeatother
+
+
+\begin{document}
+\maketitle
+This problem set consists of four problems. You have two weeks to solve them and submit your solutions (Dec. 5th 11:59 PM). You can work in teams of up to three students.   
+
+\subsection*{Problem 1: Iterative solver for nonlinear equations}
+
+In this problem you will have to code up a simple function that we
+can use to solve nonlinear equations in one unknown by using an iterative
+method. Consider the following problem: 
+
+Let $f:R\rightarrow R$. We want to find $x$ such that
+
+\begin{align*}
+0 & =f\of{x}.
+\end{align*}
+Our task is thus to find a root (because there are possibly many)
+of $f\of{x}$. Notice that it is the same as 
+\[
+x=f\of{x}+x
+\]
+or, if we define $g\of{x}:=f\of{x}+x$ 
+\[
+x=g\of{x}.
+\]
+We look for a fixed point of $g\of{x}$: a value of $x$ such
+that $g\of{x}$ is equal to $x$. It may or may not exist.
+Sometimes we can prove a fixed point exists.\footnote{Brouwer's, Kakutani's and Tarski's fixed point theorems are are often used in economics.} Sometimes we can even show it is unique and we will converge to it
+from any guess.\footnote{See Contraction Mapping Theorem by Stefan Banach. We will talk about
+it in detail.} Suppose that we start with some $x=x_{0}$ and we calculate $x_{1}=g\left(x_{0}\right)$.
+We can then check if $x_{1}$ is close to $x_{0}$. If it is, i.e.
+$\frac{\left|x_{1}-x_{0}\right|}{1+\abs{x_0}}<\epsilon$ for some small $\epsilon>0$
+we (approximately) found a fixed point. If not, then we calculate
+$x_{2}=g\left(x_{1}\right)$ and check again. We proceed in this fashion
+using the formula $x_{n+1}=g\left(x_{n}\right)$. 
+
+You task is to write
+a \emph{function} that takes five arguments (three mandatory and two optional): 
+\begin{enumerate}
+\item a one-dimensional \emph{function} $f$, 
+\item a starting guess $x_{0}$,
+\item an extra parameter $\alpha$ to be explained shortly below, 
+\item a tolerance parameter $\epsilon$ (optional), 
+\item a maximum number of iterations $maxiter$ (optional). 
+\end{enumerate}
+This function is supposed to return: 
+\begin{enumerate}
+\item an integer $flag$ equal to 0 if the solution has been found before
+the maximum number of iterations has been reached
+\item the point that is the solution (or NaN if it has not been found),
+\item the value of that solution (or NaN if it has not been found), 
+\item an absolute value of a difference between the solution $x$ and $g\of{x}$, 
+\item a vector of all $\left\{ x_{0}.x_{1},x_{2},\cdots\right\} $
+\item a
+vector of all residuals $\left\{ \left|x_{1}-x_{0}\right|,\left|x_{2}-x_{1}\right|,\ldots\right\} $.
+\end{enumerate}
+We will actually work with a modified version of the algorithm: 
+\[
+x_{n+1}=\left(1-\alpha\right)g\of{x_n}+\alpha x_{n}.
+\]
+The parameter $\alpha$ is responsible for dampening: if it's close
+to 1, then we will update our guesses only slowly. 
+
+The optional parameters should be equal to $\epsilon=10^{-6}$ and $maxiter=1000$ be default (i.e. unless specified otherwise).
+
+
+
+Once you write the function, you will test how it works with
+\begin{align*}
+    f\of{x}  = x^4 - e^x + 1, \quad h\of{x} = x - (e^x - 1)^{1/4}.
+\end{align*}
+
+
+Region of convergence... 
+
+First, pl. 
+
+Graphically verify that these three functions have exactly the same three roots. For each of these three functions, rewrite the problem of finding the root as a fixed point problem. For each of these three functions, create a plot showing $g\of{x}$ and $x$ on the same graph.
+ Start from $x_0 = 0$ and $\alpha = 0$. Does it work for different values of $\alpha$ and/or different starting points? How many roots does $f\of{x}$ have? Can you find them all using your function?
+Once you write the function, test it by find the root of $f\of{x}=\bp{x+1}^\frac{1}{3}-x$ starting from $x_0 = 1$ and using $\alpha = 0$. Does it work for different values of $\alpha$ and/or different starting points? Convince yourself that finding the root of $f\of{x}$ is the same as finding the root of $h\of{x}=x^3-x-1$. Can you find $\alpha$ such that the algorithm converges to the root starting from $x_0=1$?\footnote{What if you start from a point slightly different from the root of $f\of{x}$?} 
+
+
+\subsection*{Problem 2: Some linear algebra}
+
+Let \begin{align*}
+    \mathbf{A} = \begin{bmatrix}
+    1 & -1 & 0 &  \a - \b & \b  \\
+    0 & 1 & -1 & 0 & 0  \\
+    0 & 0 & 1 & -1 & 0  \\
+    0 & 0 & 0 & 1  & -1 \\
+    0 & 0 & 0  & 0 & 1  
+    \end{bmatrix},
+    \quad \mathbf{b} 
+    = \begin{bmatrix} \a \\ 0 \\ 0 \\ 0 \\ 1 \end{bmatrix}.
+\end{align*}
+
+The system $\mathbf{Ax}=\mathbf{b}$ is relatively easy to solve by hand. 
+
+\emph{Steps to follow:}
+\begin{enumerate}
+\item Your first task is to write a function that takes $\a$ and $\b$ as arguments and returns the exact solution. You will have to do algebra by hand to find it -- start from the last equation. 
+\item Next, write a function that takes $\a$, $\b$ as arguments and return the exact solution, the solution obtained by using the backslash operator, the relative residual, and the condition number. 
+\item Use your functions to create the table that shows $x_1$ (both exact and obtained by using the backslash operator), the condition number, and the relative residual for $\a = 0.1$ and $\b = 1, 10, 100, \ldots, 10^{12}$.
+\end{enumerate}
+
+\subsection*{Problem 3: Internal rate of return}
+
+Net present value of an investment is calculated as 
+\begin{align*}
+    NPV = \sum_{t=0}^T \bp{\frac{1}{1+r}}^t C_t.
+\end{align*}
+
+In the notation above, $\bc{C_t}_{t=0}^\infty$ is a sequence of cash flows. Negative values of $C_t$ denote costs associated an the investment (outflows); positive values of $C_t$ are gains (inflows). $r$ denotes the rate of return used to discount these cash flows. We call $r>-1$\footnote{$r=-1$ means that the gross rate of return, $1+r$, is 0: for one unit invested today we get zero units tomorrow - we lose everything.} that satisfies $$NPV\of{r}=0$$ the \emph{internal rate of return} (IRR). Such a value of $r$ makes the discounted present value of costs incurred equal the discounted present value of gains related to an investment. The IRR is an indicator of the profitability of an investment. Write a function $\mathtt{internal \_ rate(C)}$ that takes a vector of numbers $C$ and calculates the internal rate of return. 
+
+\emph{Steps to follow:}
+\begin{enumerate}
+    \item Create a function $\mathtt{NPV(r,C)}$. This function should return the net present value as a function of the sequence of cash flows $\bc{C_t}_{t=0}^\infty$ and some rate of return $r$. 
+    \item Use a nonlinear equation solver to find the root of $\mathtt{NPV \_ rate(r,C)}$ for a given value of $C$. You can either write a wrapper function $\mathtt{wrapped \_ NPV(r) = \mathtt{NPV(r,C)}}$ or write  $\mathtt{r \rightarrow NPV(r,C)}$ when calling the solver.
+    \item Put everything inside a function $\mathtt{internal \_ rate(C)}$. 
+    
+\end{enumerate}
+There are some things to consider. You are free to use any numerical solver. It might be the case that the root does not exist. It can happen, for example, when $C_t$ has the same sign for all $t$. In this case your code should return a warning message instead of a number. Similarly, if your solver did not manage to find any root, your code should display a warning. Use information from the solver output. It is also possible that there are multiple roots. For now, you can ignore this issue. 
+
+Keep in mind that experimenting with arbitrary numbers in $\bc{C_t}_{t=0}^T$ usually does not make too much sense. A first step is to test whether your code returns a correct answer for $C_0<0$ and $C_1 = C_2 = ... = C_T > 0$. Given these conditions, there is always a single unique solution for IRR. 
+
+\textit{Example}
+$$\mathtt{internal \_ rate([-5,0,0,2.5,5])} = 0.11735$$
+
+\subsection*{Problem 4: Production}
+
+A firm uses two inputs $x_1$ and $x_2$ to produce a single output $y$. The production function is given by \begin{align*}
+    f\of{x_1,x_2} = \bp{\alpha x_1^{\frac{\sigma-1}{\sigma}} + \bp{1-\alpha}x_2^{\frac{\sigma-1}{\sigma}}}^{\frac{\sigma}{\sigma-1}},
+\end{align*}
+where $\alpha \in (0,1)$ and $\sigma \geq 0$. This function is know as CES (constant elasticity of substitution) production function, and the parameter $\sigma$ represents the elasticity of substitution. 
+Notice $\sigma=1$ corresponds to the Cobb-Douglas production function (i.e. $f\of{x_1,x_2} = x_1^\alpha x_2^{1-\alpha}$).\footnote{You can check it by taking the limit of the CES production function as $\sigma \rightarrow 1$.} 
+
+The firm minimizes its expenditure on inputs $x_1$ and $x_2$ subject to the production target $y$. The problem can be written as 
+\begin{align*}
+    \min_{x_1,x_2} \quad  & w_1 x_1 + w_2 x_2 \\
+    \text{s.t.} & f\of{x_1,x_2} = y,
+\end{align*}
+where $w_1$ and $w_2$ are the prices of inputs $x_1$ and $x_2$, respectively. We also require that $x_1,x_2 \geq 0$ - these are nonnegativity constraints on inputs.
+
+The value of $w_1 x_1 + w_2 x_2$ at the optimum is called the cost function, $C\of{w_1,w_2,y}$.
+
+\emph{Steps to follow:}
+\begin{enumerate}
+\item  Write a function that takes $\alpha$, $\sigma$ and $x_1$ and $x_2$ as arguments and creates a contour plot of the production function $f\of{x_1,x_2}$ for $x_1 \geq 0, x_2 \geq 0$. 
+\item  Create the above plot for $\alpha = 0.5$ and $\sigma = 0.25, 1, 4$. Your answer should be a single plot with three panels (each one for a different value of $\sigma$). You do not need to write a function for this part, it is enough to write a script that calls the function you wrote in the first part.
+\item  Write a function that takes $\alpha$, $\sigma$, $w_1$, $w_2$, and $y$ as arguments and returns the cost function and $x_1$ and $x_2$. Inside this function, you will have to solve a constrained minimization problem (because you have nonnegativity constraints). You can use whatever package you want. Make sure that you test that optimization works correctly and finds the correct solution. Note that the $\sigma=1$ case might need a special treatment.
+\item  Plot the cost function and the input demand functions ($x_1$ and $x_2$) for three different values of $\sigma$: $\sigma = 0.25, 1, 4$ as a function of $w_1$ for $w_2 = 1$ and $y = 1$. Set $\alpha$ to 0.5. Your answer should be a single plot with three panels (cost, $x_1$, and $x_2$) and three lines in each panel (each one for a different value of $\sigma$). You do not need to write a function for this part, it is enough to write a script that first calls the functions you wrote in the first part and then plots the results.
+\end{enumerate}
+
+
+\end{document}
+

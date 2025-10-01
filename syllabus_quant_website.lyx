@@ -1,0 +1,498 @@
+#LyX 2.4 created this file. For more info see https://www.lyx.org/
+\lyxformat 620
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\date{}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children no
+\language english
+\language_package default
+\inputencoding auto-legacy
+\fontencoding auto
+\font_roman "palatino" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_roman_osf false
+\font_sans_osf false
+\font_typewriter_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_formatted_ref 0
+\use_minted 0
+\use_lineno 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2.5cm
+\topmargin 2.5cm
+\rightmargin 2.5cm
+\bottommargin 2.5cm
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tablestyle default
+\tracking_changes false
+\output_changes false
+\change_bars false
+\postpone_fragile_content false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\docbook_table_output 0
+\docbook_mathml_prefix 1
+\end_header
+
+\begin_body
+
+\begin_layout Title
+
+\series bold
+Quantitative Economics 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+
+\end_layout
+
+\end_inset
+
+
+\series default
+\size normal
+Fall 2025
+\series bold
+\size default
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+
+\end_layout
+
+\end_inset
+
+
+\series default
+\size normal
+University of Warsaw
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Instructors:
+
+\series default
+ Marcin Lewandowski & Piotr Żoch
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Email:
+ 
+\series default
+\emph on
+mr.lewandowski2@uw.edu.pl 
+\emph default
+& 
+\emph on
+p.zoch@uw.edu.pl
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Office Hours:
+
+\series default
+ by appointment
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+
+\series bold
+Course Description
+\end_layout
+
+\begin_layout Standard
+This course is a comprehensive introduction to quantitative methods used in modern economics.
+ There are two main parts of the course.
+ In the first part we discuss elementary topics in numerical analysis with applications to statistics,
+ econometrics and economics.
+ In the second part we will focus on recursive methods for solving sequential decision problems.
+ The emphasis will be mostly on tools,
+ techniques and theories used by macroeconomists.
+ We will analyze consumption-savings problems,
+ income dynamics and wealth inequality in partial and general equilibrium.
+ To confront our models with the data we will solve them on a computer and compare their predictions with empirical regularities.
+ Time permitting,
+ we will also cover a range of other tools and techniques used in modern macroeconomics,
+ primarily in models of business cycles.
+ 
+\end_layout
+
+\begin_layout Standard
+We will make extensive use of mathematics,
+ numerical methods and computer programming.
+ There is a heavy theoretical component:
+ this course provides basic background in dynamic programming techniques (Bellman equation) frequently used in modern economics.
+ We will also study economic theory related to consumption,
+ savings,
+ wealth and income distributions.
+ There is also a heavy computational component:
+ we will study numerical methods and learn to apply them in various settings.
+ 
+\end_layout
+
+\begin_layout Standard
+We will use Julia,
+ a modern,
+ open source,
+ high productivity language primarily used in technical and scientific computing.
+ No prior knowledge of Julia is needed as a brief introduction to this language and example code will be provided.
+ 
+\end_layout
+
+\begin_layout Standard
+Students who do not find such a quantitative,
+ computational approach to economics appealing,
+ are 
+\bar under
+strongly
+\bar default
+ advised against taking this course.
+ 
+\end_layout
+
+\begin_layout Paragraph*
+
+\series bold
+Outline:
+\end_layout
+
+\begin_layout Enumerate
+Programming in Julia.
+\end_layout
+
+\begin_layout Enumerate
+Efficient and reproducible workflow:
+ version control,
+ debugging,
+ benchmarking,
+ modules,
+ and packages.
+\end_layout
+
+\begin_layout Enumerate
+Elementary concepts in scientific computing.
+\end_layout
+
+\begin_layout Enumerate
+Linear and nonlinear (systems of) equations.
+\end_layout
+
+\begin_layout Enumerate
+Optimization.
+\end_layout
+
+\begin_layout Enumerate
+Function approximation and interpolation.
+\end_layout
+
+\begin_layout Enumerate
+Numerical integration and Markov processes.
+\end_layout
+
+\begin_layout Enumerate
+Introduction to dynamic programming.
+\end_layout
+
+\begin_layout Enumerate
+Discrete Markov decision processes.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Continuous state models.
+\end_layout
+
+\begin_layout Enumerate
+Heterogeneous agent models in macroeconomics.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Perturbation methods.
+\end_layout
+
+\begin_layout Enumerate
+(Stochastic) difference equations and linear rational expectations models.
+\end_layout
+
+\begin_layout Enumerate
+Projection methods.
+ 
+\end_layout
+
+\begin_layout Paragraph*
+
+\series bold
+Requirements
+\end_layout
+
+\begin_layout Itemize
+Problem sets (x4) 40% 
+\end_layout
+
+\begin_layout Itemize
+Tests (x2) 20%
+\end_layout
+
+\begin_layout Itemize
+Final project 30%
+\end_layout
+
+\begin_layout Itemize
+Class participation 10%
+\end_layout
+
+\begin_layout Standard
+There will be four problem sets.
+ They will usually ask you to derive some theoretical results and/or implement some extensions of material covered in class on a computer and study their properties.
+ If you wish,
+ you may work on the assignments in groups of up to five students.
+ You can (and you are encouraged to do so) discuss your solutions with other students,
+ even those outside of your group.
+ You must credit the people with whom you have worked on the problem set.
+ You will have two weeks for each problem set.
+ You need to submit your code in Julia as well as a write-up.
+ 
+\end_layout
+
+\begin_layout Standard
+There will be also a final project,
+ similar in style to problem sets,
+ but longer and more difficult.
+ Its details will be announced in the last week of classes.
+ You will have three weeks to solve it.
+ You are allowed to work on it in a group of up to five students.
+\end_layout
+
+\begin_layout Standard
+Your grade will depend also on two short in-class tests.
+ Each one of them is expected to be 15-20 minutes long and will check your understanding of basics of programming in Julia.
+ This is to ensure that you actually learn,
+ instead of relying fully on AI generated code.
+\end_layout
+
+\begin_layout Standard
+Class attendance and participation will also be rewarded.
+ Sometimes we will assign mandatory readings and you will be cold-called to give a short (5 minutes) summary of them at the beginning of class.
+\end_layout
+
+\begin_layout Paragraph*
+On using AI
+\end_layout
+
+\begin_layout Standard
+AI tools are permitted as learning aids for problem sets and the final project,
+ but your submissions must demonstrate your own understanding and meaningful contribution.
+ Acceptable uses include getting help with debugging,
+ learning new syntax,
+ and reviewing code you have written.
+ However,
+ you cannot submit code generated entirely by AI without modification or understanding,
+ nor copy-paste AI solutions you cannot explain.
+ We value learning over perfect execution.
+ A working solution you understand is preferable to flawless code written by AI without your engagement.
+ If we have questions about your approach or understanding,
+ we may ask you to explain your solutions in a brief meeting.
+ The goal is ensuring you gain the knowledge this course provides,
+ which requires your active intellectual engagement with the material rather than delegation of all work to AI.
+\end_layout
+
+\begin_layout Paragraph*
+
+\series bold
+Materials
+\end_layout
+
+\begin_layout Standard
+There does not exist a single textbook for this course.
+ We will mostly rely on materials posted 
+\begin_inset CommandInset href
+LatexCommand href
+name "here"
+target "https://github.com/pzoch/QEcon2025"
+literal "false"
+
+\end_inset
+
+.
+ We will also post journal articles.
+ Textbooks which you might find useful to get better understanding of theoretical aspects of the course are:
+\end_layout
+
+\begin_layout Itemize
+Stokey,
+ Lucas and Prescott (1989) 
+\emph on
+Recursive Methods in Economic Dynamics
+\end_layout
+
+\begin_layout Itemize
+Ljungqvist and Sargent (2018) 
+\emph on
+Recursive Macroeconomic Theory
+\end_layout
+
+\begin_layout Itemize
+Sargent and Stachurski (2023) 
+\emph on
+Dynamic Programming Volume I:
+ Foundations
+\end_layout
+
+\begin_layout Itemize
+Jappelli and Pistaferri (2017) 
+\emph on
+The Economics of Consumption 
+\end_layout
+
+\begin_layout Standard
+This great book provides a gentle introduction to Julia:
+\end_layout
+
+\begin_layout Itemize
+Kamiński (2023) 
+\emph on
+Julia for Data Analysis
+\end_layout
+
+\begin_layout Standard
+Extra resources related to computation in economics:
+\end_layout
+
+\begin_layout Itemize
+QuantEcon:
+ 
+\begin_inset CommandInset href
+LatexCommand href
+name "https://quantecon.org/"
+target "https://quantecon.org/"
+literal "false"
+
+\end_inset
+
+.
+ The most relevant lectures in the Julia module (
+\begin_inset CommandInset href
+LatexCommand href
+name "https://julia.quantecon.org/intro.html"
+target "https://julia.quantecon.org/intro.html"
+literal "false"
+
+\end_inset
+
+) are Lectures 31-38 and 51.
+\end_layout
+
+\begin_layout Itemize
+Heer and Maussner (2009) 
+\emph on
+Dynamic General Equilibrium Modeling 
+\end_layout
+
+\begin_layout Itemize
+Miranda and Fackler (2002) 
+\emph on
+Applied Computational Economics and Finance 
+\end_layout
+
+\begin_layout Itemize
+Judd (1998) 
+\emph on
+Numerical Methods in Economics
+\end_layout
+
+\begin_layout Standard
+You can find more details about numerical analysis here:
+\end_layout
+
+\begin_layout Itemize
+Kincaid and Cheney (2009)
+\emph on
+ Numerical Mathematics and Computing
+\end_layout
+
+\end_body
+\end_document
