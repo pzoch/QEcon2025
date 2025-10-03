@@ -9,7 +9,7 @@ Office hours: by appointment
 
 
 ## Log and announcements 
-+ 3/10: Introduction and course logistics. Please make sure that you have VSCode and Julia installed if you bring your own computer!
++ 3/10: Introduction and course logistics. Please make sure that you have VSCode and Julia installed if you bring your own computer.
 
 
 ## Outline 
