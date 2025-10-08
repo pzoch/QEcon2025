@@ -9,6 +9,10 @@ Office hours: by appointment
 
 
 ## Log and announcements 
++ 8/10: Covered the basics of Git in Visual Studio. Here are some useful materials to recap and expand on what we discussed:
+   - [7-minute beginner tutorial](https://www.youtube.com/watch?v=i_23KUAEtUM ).
+   - [A guide to managing merge conflicts](https://www.youtube.com/watch?v=HosPml1qkrg&list=PLj6YeMhvp2S7abEHqkUPRkCSt4N2wpTwD&index=7).
+   - If you encounter the issue of configuring your user.name and user.email in Git, watch this [video](https://www.youtube.com/watch?v=RT-1Zywrse8). 
 + 3/10: Introduction and course logistics. Please make sure that you have VSCode and Julia installed if you bring your own computer.
 
 
@@ -28,3 +32,4 @@ You can download Git [here](https://git-scm.com/downloads/win).
 
 ## Project management
 See [this repo](https://github.com/jdingel/projecttemplate) by J. Dingel for good workflow practices.
+
