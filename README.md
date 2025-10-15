@@ -9,6 +9,7 @@ Office hours: by appointment
 
 
 ## Log and announcements 
++ 15/10: Basic programming: Loops and Functions.
 + 10/10: Introduction to the Packages Environment and basic programming: Conditional Statements.
 + 8/10: Covered the basics of Git in Visual Studio. Here are some useful materials to recap and expand on what we discussed:
    - [7-minute beginner tutorial](https://www.youtube.com/watch?v=i_23KUAEtUM ).
@@ -33,5 +34,6 @@ You can download Git [here](https://git-scm.com/downloads/win).
 
 ## Project management
 See [this repo](https://github.com/jdingel/projecttemplate) by J. Dingel for good workflow practices.
+
 
 
