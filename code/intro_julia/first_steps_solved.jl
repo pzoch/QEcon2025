@@ -51,3 +51,28 @@ my_mean(2)
 ####################################################################################### 
 
 
+
+#############################        CONCEPT CHECK:         ############################# 
+#Let's do some multiplication table
+#Write a function that does the following:
+#   Accepts n, which is the maximum value of a times table.
+#   Returns a matrix of size n by n, where the entries of the matrix are the product of the indices of that array.    
+# I.e. for n=5, I want to see a matrix where the [3,2] entry is 3 * 2 = 6
+
+# HINTS: 
+# 1. Initialize the Matrix with one of the commands we've just discussed
+# 2. Use two nested for loops
+# M[i,j] will give you element i i-th row and j-th column
+
+function timetables(n)
+    Time_table = Matrix{Int64}(undef, n,n) 
+    for i in 1:n #First loop
+        for j in 1:n #Second loop
+            Time_table[i,j] = i*j
+        end #End the second loop
+    end #End the first loop
+    return Time_table
+end
+Time_table_1 = timetables(5)
+Time_table_1[3,2]
+####################################################################################### 
