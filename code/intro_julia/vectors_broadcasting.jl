@@ -117,7 +117,6 @@ n_absences = rand(1:7,15)
 #######################################################################################
 
 
-#### Tuples
 ### Broadcasting further:
 mat_ones = ones(3,3)
 vec_horizontal = [0.0 1.0 2.0]
@@ -129,16 +128,16 @@ mat_ones .+ vec_vertical
 vec_vertical .+ vec_horizontal
 
 
+#############################(Extra) CONCEPT CHECK:         ############################
+# Multiplication table returns!
+# Write a function that does the following:
+#   Accepts n, which is the maximum value of a times table.
+#   Returns a matrix of size n by n, where the entries of the matrix are the product of the indices of that array.    
+# I.e. for n=5, the [3,2] entry is 3 * 2 = 6
 
-my_tuple_1 = (10, 20, 30)
-my_tuple_1[2]
-my_tuple_1[2] = 4
-my_tuple_2 = (12, "hello?", "Bernanke, Diamond, Dybvig")
-
-my_tuple_2[2]
-my_tuple_2[3]
-my_named_tuple = (α = 0.33, β = 0.9, r = 0.05)
-my_named_tuple.α
-
-
+# BUT!
+# The body of the function must contain only two lines of code:
+# 1. Initialize the array containing values 1 to N (hint: collect(1:5) will initialize a vector with 1 to 5 entries)
+# 2. Use vector operations (transpose) to get the multiplication table. Do not use any loops!
+####################################################################################### 
 
