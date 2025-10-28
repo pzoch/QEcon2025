@@ -9,6 +9,7 @@ Office hours: by appointment
 
 
 ## Log and announcements 
++ 22/10: Floating point numbers. 
 + 17/10: Programming: Vectors, Matrices. First test.
 + 15/10: Basic programming: Loops and Functions.
 + 10/10: Introduction to the Packages Environment and basic programming: Conditional Statements.
