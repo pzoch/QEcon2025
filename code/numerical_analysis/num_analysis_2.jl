@@ -1,7 +1,7 @@
 # Examples from/based on Fundamentals of Numerical Computation, Julia Edition. Tobin A. Driscoll and Richard J. Braun
 
 
-using PrettyTables, Plots, LaTeXStrings
+using PrettyTables, Plots, LaTeXStrings, Printf
 
 # let's count flops!
 

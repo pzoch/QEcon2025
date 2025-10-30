@@ -1,6 +1,6 @@
 # Examples from/based on Fundamentals of Numerical Computation, Julia Edition. Tobin A. Driscoll and Richard J. Braun
 
-using PrettyTables, Plots, LaTeXStrings, LinearAlgebra
+using PrettyTables, Plots, LaTeXStrings, LinearAlgebra, Printf
 
 
 ### let's solve a simple system of equations 
@@ -55,13 +55,13 @@ header = (["size","time operator","time inv"],["n","seconds","seconds"])
 pretty_table(data;
     header=header,
     header_crayon=crayon"yellow bold" ,
-    formatters = ft_printf("%5.2f",2))
+    formatters = ft_printf("%5.2f",2:3))
 
 
 plt = plot(n,t_operator,label="operator",seriestype=:scatter)
 plot!(plt,n,t_inv,label="inv(A)*b",seriestype=:scatter,
 xaxis=(:log10,L"n"),yaxis = (:log10,"elapsed time (s)"),
-title = "Time of matrix-matrix multiplication",)
+title = "Time of linear system solution",)
 
 
 
