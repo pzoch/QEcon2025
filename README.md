@@ -9,6 +9,7 @@ Office hours: by appointment
 
 
 ## Log and announcements 
++ 29/10: Counting floating point operations. LU decomposition.
 + 22/10: Floating point numbers. 
 + 17/10: Programming: Vectors, Matrices. First test.
 + 15/10: Basic programming: Loops and Functions.
