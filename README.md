@@ -10,6 +10,7 @@ Office hours: by appointment
 
 ## Log and announcements 
 + 29/10: Counting floating point operations. LU decomposition.
++ 24/10: Operations on vectors and matrices. Broadcasting.
 + 22/10: Floating point numbers. 
 + 17/10: Programming: Vectors, Matrices. First test.
 + 15/10: Basic programming: Loops and Functions.
@@ -37,6 +38,7 @@ You can download Git [here](https://git-scm.com/downloads/win).
 
 ## Project management
 See [this repo](https://github.com/jdingel/projecttemplate) by J. Dingel for good workflow practices.
+
 
 
 
