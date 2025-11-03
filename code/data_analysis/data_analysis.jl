@@ -1,4 +1,4 @@
-using Statistics, Plots, DelimitedFiles
+using Statistics, Plots, DelimitedFiles, Distributions
 
 #Let's get some practice working with vectors and matrices!
 data_1 = readdlm("code//data_analysis//datasets//dataset_1.csv", ',',Float64)
@@ -54,7 +54,6 @@ cor_data_2 = cor(data_2)[1,2]
 
 
 #Note: This syntax with $(variable) is used to insert the value of a variable into a string
-#It will be very useful for your homework!
 plot_1 = scatter(data_1[:,1], data_1[:,2]; label="cor(x,y)=$(cor_data_1)", color=:blue, markersize = 5)
 
 
@@ -88,8 +87,6 @@ savefig(both_plots, "code//data_analysis//both_plots.pdf")
 
 
 
-
-
 #############################        QUICK TASK 2:         ############################# 
 #Following the instruction on slides write your own function fit_regression(x,y)
 #which accepts two vectors x,y and returns a vector of regression coefficients.
@@ -103,7 +100,6 @@ y = data_1[:,2]
 # 4. Define a function fit_regression(x,y)
 
 
-
 # 5. This call should return the coefficients!
 β0,β1 = fit_regression(x,y)
 
@@ -113,9 +109,72 @@ cov(x,y)/var(x)
 ######################################################################################### 
 
 
+
 scatter(x, y; label="Our data", color=:blue, markersize = 5)
-#This will work only if you have defined β0 and β1 (thus fit_regression function!!)
-plot!(x,β0.+β1.*x; label="Fitted line: y=$(round(β0,digits=2))+$(round(β1,digits=2))x",linewidth=4)
+#This will work only if you have defined β0 and β1 
+plot!(x,β0.+β1.*x; label="Fitted line: y=$(round(β0,digits=2))+$(round(β1,digits=2))x",linewidth=4)#This will work only if you have defined β0 and β1 
 xaxis!( "x")
 yaxis!( "y")
 title!("Scatter plot of data_1 with fitted line")
+
+
+#############################        QUICK TASK 3:         ############################# 
+#Following the instruction on slides define the t-statistic for the test on the slope coefficient β1
+# HINTS: 
+# 1. Using your fit_regression function get β0 and β1.
+# 2. Define predicted values and residuals (to get the ̂u)
+# 3. Definie a vector with x variation around its mean
+# 4. Use those to get the SE of β1 and then the t-statistic.
+t_statistic = nothing  #replace this with your code
+
+# This code will calculate the p-value for you: once you have t_statistic defined.
+# Degrees of freedom:
+df = length(y) - 2
+# p-value (two-tailed):
+p_value     = 2 * (1 - cdf(TDist(df), abs(t_statistic)))
+println("p-value for β1: ", p_value)
+######################################################################################### 
+
+
+
+
+
+
+##################SOME ADDITIONAL MATERIAL ON RANDOM VARIABLES IN JULIA##################
+#Julia is very good language for simulations, we will see why.
+
+#package Distributions allows us to define our own Categorical Distributions
+coin = Categorical([0.5, 0.5]); # 2 discrete states and their probabilities
+dice = Categorical([1/6, 1/6, 1/6, 1/6, 1/6, 1/6]); # 6 discrete states and their probabilities
+
+#The objects created
+@show coin;
+@show dice;
+
+#We can take i.i.d. draws 
+rand(coin, 5)
+rand(dice, 7)
+
+#Or calculate sample mean of 7 draws
+roll_it = rand(dice,7 )
+mean(roll_it)
+
+# We can get the probability of rolling 1
+pdf(dice, 1) 
+# Inspect the support of the distribution
+support(dice)
+# Or broadcast the pdf over the entire support of dice
+@show pdf.(dice, support(dice)); 
+
+#Or even create a vector of sample means of 7 i.i.d (independently and identically distributed) draws
+means = [mean(rand(dice, 7)) for _ in 1:10]
+
+
+#Mean of draws has a distribution of its own! Let's simulate it:
+means_10  = [sum(rand(dice, 10)./10) for _ in 1:10000]
+a = Animation()
+for i in 1:10:5000
+    plt = histogram(means_10[1:i], xlim=(1,6), ylim=(0,1), normalize=:pdf,label="Mean of 10 rv",legend=:outertop, bins=1.2:0.1:5.8)
+    frame(a, plt)
+end
+gif(a, "anim_mean_10_fps5.gif", fps = 5)
