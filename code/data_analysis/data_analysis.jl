@@ -164,17 +164,17 @@ pdf(dice, 1)
 # Inspect the support of the distribution
 support(dice)
 # Or broadcast the pdf over the entire support of dice
-@show pdf.(dice, support(dice)); 
+pdf.(dice, support(dice)) 
 
-#Or even create a vector of sample means of 7 i.i.d (independently and identically distributed) draws
-means = [mean(rand(dice, 7)) for _ in 1:10]
-
+#Or even create a vector of sample means of 6 i.i.d (independently and identically distributed) draws
+means = [mean(rand(dice, 6)) for _ in 1:10]
 
 #Mean of draws has a distribution of its own! Let's simulate it:
-means_10  = [sum(rand(dice, 10)./10) for _ in 1:10000]
+means_10  = [sum(rand(dice, 6)./6) for _ in 1:5000]
+
 a = Animation()
 for i in 1:10:5000
-    plt = histogram(means_10[1:i], xlim=(1,6), ylim=(0,1), normalize=:pdf,label="Mean of 10 rv",legend=:outertop, bins=1.2:0.1:5.8)
+    plt = histogram(means_10[1:i], xlim=(1,6), ylim=(0,1), normalize=:pdf,label="Mean of 10 rv",legend=:outertop, bins=1.25:0.5:5.75)
     frame(a, plt)
 end
 gif(a, "anim_mean_10_fps5.gif", fps = 5)
