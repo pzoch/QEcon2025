@@ -9,10 +9,11 @@ Office hours: by appointment
 
 
 ## Log and announcements 
++ 5/11: Calculating mean, standard deviation, and correlations. Writing a custom regression function. Test II.
 + 29/10: Counting floating point operations. LU decomposition.
 + 24/10: Operations on vectors and matrices. Broadcasting.
 + 22/10: Floating point numbers. 
-+ 17/10: Programming: Vectors, Matrices. First test.
++ 17/10: Programming: Vectors, Matrices. Test I.
 + 15/10: Basic programming: Loops and Functions.
 + 10/10: Introduction to the Packages Environment and basic programming: Conditional Statements.
 + 8/10: Covered the basics of Git in Visual Studio. Here are some useful materials to recap and expand on what we discussed:
@@ -38,6 +39,7 @@ You can download Git [here](https://git-scm.com/downloads/win).
 
 ## Project management
 See [this repo](https://github.com/jdingel/projecttemplate) by J. Dingel for good workflow practices.
+
 
 
 
