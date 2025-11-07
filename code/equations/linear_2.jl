@@ -1,6 +1,6 @@
 # Examples from/based on Fundamentals of Numerical Computation, Julia Edition. Tobin A. Driscoll and Richard J. Braun
 
-using PrettyTables, Plots, LaTeXStrings, LinearAlgebra
+using PrettyTables, Plots, LaTeXStrings, LinearAlgebra, Printf
 
 
 ### ------------------------------
