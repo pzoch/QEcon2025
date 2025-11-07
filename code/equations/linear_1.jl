@@ -128,7 +128,7 @@ xaxis=(:log10,L"n"),yaxis = (:log10,"elapsed time (s)"),
 title = "Time of forward elimination",);
 plot!(plt,n,t_2,label="operator",seriestype=:scatter)
 
-plot!(n,t[end]*(n/n[end]).^2,label=L"O(n^2)",lw=2,ls=:dash,lc=:red,legend = :topleft)
+plot!(n,t_1[end]*(n/n[end]).^2,label=L"O(n^2)",lw=2,ls=:dash,lc=:red,legend = :topleft)
 
 ### ----------------
 ### LU factorization 
@@ -238,11 +238,15 @@ resid = A*x - b
 # another example... 
 ϵ = 1e-15; A = [1 1 2;2 2+ϵ 0; 4 14 4]; b = [-5;10;0.0]
 x = my_lu_solve(A,b)
-resid = A*x - b
+resid_my_lu = A*x - b
 x = A\b
 resid = A*x - b
 
-L,U   = my_lu_fact(A)
+A_ret = my_lu_fact(A)
+L = tril(A_ret,-1) + I
+U = triu(A_ret)
+
+
 L,U,P = lu(A)
 
 
