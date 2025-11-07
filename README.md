@@ -9,6 +9,7 @@ Office hours: by appointment
 
 
 ## Log and announcements 
++ 7/11: Condition number. Iterative solvers.
 + 5/11: Calculating mean, standard deviation, and correlations. Writing a custom regression function. Test II.
 + 29/10: Counting floating point operations. LU decomposition.
 + 24/10: Operations on vectors and matrices. Broadcasting.
