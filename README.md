@@ -9,6 +9,10 @@ Office hours: by appointment
 
 
 ## Log and announcements 
+
+> [!IMPORTANT]
+> **PROBLEM SET 1** is available. It is due on **26.11.2025, 11:59 PM**. 
+
 + 7/11: Condition number. Iterative solvers.
 + 5/11: Calculating mean, standard deviation, and correlations. Writing a custom regression function. Test II.
 + 29/10: Counting floating point operations. LU decomposition.
