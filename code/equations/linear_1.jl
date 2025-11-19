@@ -272,3 +272,4 @@ end
 plt = plot(n,t_1,label="my LU",seriestype=:scatter)
 plot!(plt,n,t_2,label="operator",seriestype=:scatter,
 xaxis=(:log10,L"n"),yaxis = (:log10,"elapsed time (s)"),title = "Time",)
+

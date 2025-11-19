@@ -5,17 +5,18 @@ using PrettyTables, Plots, LaTeXStrings, LinearAlgebra, NLsolve, Roots
 
 
 # example using NLsolve 
-
 f(x) = x.^2 .- 3 .+ x .* sin.( 1 ./ x .+ x .^ 2 )
 
-plot(f, -30, 30, label="f(x) =  x^2 - 3 + x * sin(1/x + x^2 )", legend=:topleft)
-plot!(zero, -30, 30, label="y=0")
+plot(f, 1.0, 2, label="f(x) =  x^2 - 3 + x * sin(1/x + x^2 )", legend=:topleft)
+plot!(zero, -3, 3, label="y=0")
 
 
-guess = 20.5
+guess = 2.5
 nlsolve(f,[guess],ftol=1e-14,show_trace=true)
 nlsolve(f,[guess],method=:newton,ftol=1e-14,show_trace=true)
 
+guess = 20.5
+solution = nlsolve(f,[guess],ftol=1e-14).zero
 # example using Roots 
 
 find_zero(f, (0.1,3), Bisection(), verbose = true, atol = 1e-14)
@@ -82,10 +83,10 @@ function newton(f,dfdx,x₁;maxiter=40,ftol=100*eps(),xtol=100*eps())
     return x
 end
 
-x = newton(f,dfdx,1.0)
+x = newton(f,dfdx, 3.0)
 
-myscatter = scatter(;xlim = [0.825,1.1],ylim = [-0.25,3])
-plot!(f, 0.825, 1.1, label="f(x) = x*exp(x) - 2", legend=:topleft)
+myscatter = scatter(;xlim = [0.825,3.1],ylim = [-0.25,60])
+plot!(f, 0.825, 10.1, label="f(x) = x*exp(x) - 2", legend=:topleft)
 animation = @animate for (ind,point) in enumerate(x)
     scatter!(myscatter,[point], [f(point)], alpha = 1 - ind/length(x),ms = 5 + 10*ind/length(x),color = :blue,lab="")
 end
@@ -110,7 +111,7 @@ plot(f, -1, 1, label="f(x) = sign(x) * sqrt(abs(x))", legend=:topleft)
 
 dfdx(x) = 1/(2*sqrt(abs(x)))
 
-x = 1.0
+x = 0.0001
 x = newton(f,dfdx,x)
 
 myscatter = scatter(;xlim = [-2,2])
