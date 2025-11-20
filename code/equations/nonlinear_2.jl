@@ -54,7 +54,7 @@ gif(animation,fps = 5)
 root_1 = r.zero
 
 
-initial_x = [3.0,4.43]
+initial_x = [1.0,1.43]
 r = nlsolve(f,initial_x,store_trace=true,extended_trace=true)
 x_interations = vcat([(r.trace.states[i].metadata["x"])' for i in 1:r.iterations]...)
 animation = plot_iterations(f,x_interations)
@@ -62,7 +62,7 @@ gif(animation,fps = 5)
 root_2 = r.zero
 
 
-initial_x = [-1.5,0.43]
+initial_x = [-0.5,-1.43]
 r = nlsolve(f,initial_x,method=:newton,store_trace=true,extended_trace=true)
 x_interations = vcat([(r.trace.states[i].metadata["x"])' for i in 1:r.iterations]...)
 animation = plot_iterations(f,x_interations)
@@ -91,6 +91,9 @@ function consumers_first_order_conditions(x,p,w,α)
 end 
 
 # derive demand for an example 
+
+
+# r = nlsolve(f, dfdx, initial_x,method=:newton,store_trace=true,extended_trace=true)
 r = nlsolve( x -> consumers_first_order_conditions(x,[1.0,1.0],2.0,0.25),[1.0,1.0,0.5],method=:newton,store_trace=true,extended_trace=true)
 r
 
