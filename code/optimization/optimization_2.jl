@@ -1,21 +1,3 @@
-# ============================================================================
-# MULTIVARIATE OPTIMIZATION METHODS
-# ============================================================================
-# This script demonstrates various methods for multivariate optimization
-# using the Rosenbrock function as a test case
-#
-# Methods covered:
-# 1. Gradient Descent
-# 2. Newton's Method
-# 3. BFGS (Quasi-Newton)
-# 4. Nelder-Mead (with detailed simplex visualization)
-# 5. Simulated Annealing
-#
-# The Nelder-Mead section includes:
-# - Custom implementation to track simplex vertices
-# - Animation showing simplex transformations (reflection, expansion, contraction, shrink)
-# - Multi-panel comparison of key iterations
-# ============================================================================
 
 using PrettyTables, Plots, LaTeXStrings, LinearAlgebra, NLsolve, Optim, Roots, Calculus
 
@@ -76,7 +58,6 @@ function track_simplex(x_simplex)
 end
 
 
-# Reset tracking
 simplex_history = []
 iteration_count = 0
 
@@ -85,7 +66,6 @@ res_nm = optimize(rosenbrock, x0, NelderMead(),
     Optim.Options(store_trace=true, extended_trace=true, iterations=30, trace_simplex=true))
 
 
-# Extract simplex trace for Nelder-Mead (all vertices, not just centroid)
 nm_simplex_trace = Optim.simplex_trace(res_nm)
 nm_centroid_trace = Optim.centroid_trace(res_nm)
 
@@ -193,113 +173,26 @@ anim_nm = @animate for i in 1:min(30, length(nm_simplex_trace))
             label="Starting point")
     end
     
-    # Add iteration info box with better formatting
+
     f_best = minimum(f_values)
     f_worst = maximum(f_values)
     f_centroid = rosenbrock(nm_centroid_trace[i])
     
-    # Create a more readable info box
+
     info_text = "Iteration: $i\n\n" *
                 "f(best)     = $(round(f_best, digits=5))\n" *
                 "f(middle)   = $(round(f_values[perm[2]], digits=5))\n" *
                 "f(worst)    = $(round(f_worst, digits=5))\n" *
                 "f(centroid) = $(round(f_centroid, digits=5))"
     
-    # Place info box with background
+
     annotate!(-0.15, 0.75, 
         text(info_text, :white, :left, 11, :left, 
-             :courier,
-             bbox=Dict(:facecolor=>:black, :alpha=>0.7, :pad=>10)))
+             :courier))
 end
 
-# Save animation
+gif(anim_nm,fps = 1)
 
-
-# Create a static summary plot showing final state
-println("\nCreating static summary plot...")
-p_static = contour(-0.25:0.015:1.5, 0.0:0.015:1.5, 
-    (x,y)->log10(rosenbrock([x, y]) + 1), 
-    fill=true, 
-    color=:viridis, 
-    levels=30,
-    xlabel=L"x_1",
-    ylabel=L"x_2",
-    xlabelfontsize=14,
-    ylabelfontsize=14,
-    title="Nelder-Mead: Complete Trajectory",
-    titlefontsize=16,
-    legend=:topright,
-    legendfontsize=11,
-    size=(900, 800),
-    dpi=150,
-    margin=5Plots.mm)
-
-# Draw centroid path with better visibility
-traj_x = [c[1] for c in nm_centroid_trace]
-traj_y = [c[2] for c in nm_centroid_trace]
-plot!(p_static, traj_x, traj_y, 
-    linewidth=3, 
-    color=:yellow, 
-    alpha=0.9,
-    label="Centroid path")
-
-# Add arrows along path to show direction
-n_arrows = 5
-arrow_indices = round.(Int, range(1, length(traj_x)-1, length=n_arrows))
-for idx in arrow_indices
-    quiver!(p_static, [traj_x[idx]], [traj_y[idx]], 
-        quiver=([traj_x[idx+1]-traj_x[idx]], [traj_y[idx+1]-traj_y[idx]]),
-        color=:yellow,
-        linewidth=2,
-        label=nothing)
-end
-
-# Draw final simplex with better styling
-final_simplex = nm_simplex_trace[end]
-simplex_x = [s[1] for s in final_simplex]
-simplex_y = [s[2] for s in final_simplex]
-push!(simplex_x, simplex_x[1])
-push!(simplex_y, simplex_y[1])
-
-plot!(p_static, simplex_x, simplex_y, 
-    fillcolor=:lightblue,
-    fillalpha=0.5,
-    linewidth=4,
-    linecolor=:white,
-    label="Final simplex")
-
-scatter!(p_static, simplex_x[1:end-1], simplex_y[1:end-1],
-    markersize=12,
-    color=:white,
-    markerstrokewidth=3,
-    markerstrokecolor=:black,
-    label="Final vertices")
-
-scatter!(p_static, [1.0], [1.0], 
-    color=:lime, 
-    markersize=16, 
-    marker=:star5,
-    markerstrokewidth=3,
-    markerstrokecolor=:black,
-    label="Global minimum")
-
-scatter!(p_static, [x0[1]], [x0[2]], 
-    color=:red, 
-    markersize=12, 
-    marker=:diamond,
-    markerstrokewidth=3,
-    markerstrokecolor=:white,
-    label="Starting point")
-
-# Add text annotations
-annotate!(p_static, x0[1]+0.1, x0[2]+0.05, 
-    text("Start", :white, :left, 11, :bold))
-annotate!(p_static, 1.0, 0.92, 
-    text("Optimum", :white, :center, 11, :bold))
-
-display(p_static)
-savefig(p_static, "nelder_mead_final.png")
-println("✓ Static plot saved as 'nelder_mead_final.png'")
 
 ## simulated annealing
 res_sa = optimize(rosenbrock, x0, SimulatedAnnealing(), Optim.Options(store_trace=true, extended_trace=true, iterations = 100000))

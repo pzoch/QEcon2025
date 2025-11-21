@@ -6,12 +6,13 @@ using PrettyTables, Plots, LaTeXStrings, LinearAlgebra, NLsolve, Optim, Roots, C
 f_univariate(x)     = 2x^2+3x+1
 dfdx_univariate(x)  = 4x+3
 
-plot(f_univariate, -2.0, 1.0, label = L"f(x) = 2x^2+3x+1", xlabel = L"x", ylabel = L"f(x)", title = "Univariate Function", lw = 2)
+plot(f_univariate, -2.0, 1.0, label = |L"f(x) = 2x^2+3x+1", xlabel = L"x", ylabel = L"f(x)", title = "Univariate Function", lw = 2)
 plot!(dfdx_univariate, -2.0, 1.0, label = L"f'(x) = 4x+3", lw = 2)
 
 
 # use bisection on f'
-find_zero(dfdx_univariate, (-2,2), Bisection(), verbose = true, atol = 1e-14)
+tracker = Roots.Tracks()
+ find_zero(dfdx_univariate, (-2,2), Bisection(), atol = 1e-14)
 
 # use golden section on f
 optimize(f_univariate, -2.0, 1.0, GoldenSection(),atol = 1e-14)
@@ -21,7 +22,8 @@ optimize(f_univariate, -2.0, 1.0, GoldenSection(),atol = 1e-14)
 function newton(f,dfdx,dfdx2,x0; ε=10e-6, δ=10e-6, maxcounter = 100, verbose = false)
     # this algorithm is from Judd (1998), page 98
     x_old = x0
-    x_new = 2*abs(x0) + 1
+    x_new = x0
+
     counter = 1
     guesses = []
 
@@ -55,7 +57,7 @@ end
 
 dfdx2_univariate(x)  = 4.0
 
-newton(f_univariate,dfdx_univariate,dfdx2_univariate,100.0)
+newton(f_univariate,dfdx_univariate,dfdx2_univariate,1000000.0)
 
 
 # what if we do not have derivatives?

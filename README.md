@@ -13,6 +13,8 @@ Office hours: by appointment
 > [!IMPORTANT]
 > **PROBLEM SET 1** is available. It is due on **26.11.2025, 11:59 PM**. 
 
++ 21/11: Optimization methods continued. 
++ 19/11: Nonlinear equations solvers: multivariate. Introduction to optimization methods.
 + 12/11: Nonlinear equations solvers: univariate.
 + 7/11: Condition number. Iterative solvers.
 + 5/11: Calculating mean, standard deviation, and correlations. Writing a custom regression function. Test II.
