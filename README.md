@@ -11,9 +11,9 @@ Office hours: by appointment
 ## Log and announcements 
 
 > [!IMPORTANT]
-
 > **PROBLEM SET 2** is available. It is due on **10.12.2025, 11:59 PM**. 
 
+> [!IMPORTANT]
 > **PROBLEM SET 1** is available. It is due on **26.11.2025, 11:59 PM**. 
 
 + 21/11: Optimization methods continued. 
