@@ -1,4 +1,4 @@
-using Plots,NLopt, Distributions,ForwardDiff,DelimitedFiles
+using Plots,NLopt, Distributions,ForwardDiff,DelimitedFiles,GLM, DataFrames
 
 #############################        LOGIT EXAMPLE:         ############################ 
 F_bad(x)    = exp(x)/(1+exp(x))
@@ -77,9 +77,10 @@ function Logit_LogLik(params::Vector,y,x)
     ## x: a vector x variable
     
     #### Introduce your code below: ####
-    First_part  = nothing
-    Second_part = nothing
-    Sum         = nothing
+    
+    First_part  = @. y*log(F(params[1]+params[2]*x;probability_of=1)) 
+    Second_part = @. (1-y)*log(F(params[1]+params[2]*x;probability_of=0))
+    Sum         = sum(First_part) + sum(Second_part)
     return Sum
 end
 ##################################################
@@ -130,6 +131,7 @@ std_err_β1 = sqrt(-inv(hess)[2,2])
 z_0 = max_param[1]/std_err_β0
 z_1 = max_param[2]/std_err_β1
 
+
 ############################## Concept check! ##############################
 ## Suppose you were asked to model the relationship between the 
 ## probability of getting to college and the (average) parents education. 
@@ -162,7 +164,6 @@ title!("College admission vs parents education")
 
 #########COMPARE YOUR WORK WITH THE GLM PACKAGE! #########
 ## First, add GLM and DataFrames packages:
-using GLM, DataFrames
 
 # Convert data to DataFrame for GLM
 df = DataFrame(x = data[:, 2], y = data[:, 1])
