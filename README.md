@@ -13,6 +13,7 @@ Office hours: by appointment
 > [!IMPORTANT]
 > **PROBLEM SET 2** is available. It is due on **10.12.2025, 11:59 PM**. 
 
++ 3/12: Introduction to dynamic programming: McCall job search model
 + 28/11: Optimization: example II (Consumption-saving problem)
 + 26/11: Optimization: example I (Maximum Likelihood)
 + 21/11: Optimization methods continued. 
