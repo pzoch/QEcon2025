@@ -9,11 +9,7 @@ Office hours: by appointment
 
 
 ## Log and announcements 
-
-> [!IMPORTANT]
-> **PROBLEM SET 2** is available. It is due on **10.12.2025, 11:59 PM**. 
-
-
++ 10/12: Banach's Contraction Mapping Theorem - proof. Blackwell's conditions for contraction. Examples: shortest path, tree cutting. 
 + 5/12: Bellman equation in McCall job search model. Banach's Contraction Mapping Theorem.
 + 3/12: Introduction to dynamic programming: McCall job search model
 + 28/11: Optimization: example II (Consumption-saving problem)
