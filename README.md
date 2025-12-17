@@ -9,6 +9,8 @@ Office hours: by appointment
 
 
 ## Log and announcements 
++ 17/12: Examples continued: tree cutting, resource extraction.
++ 12/12: Markov chains. Tauchen and Rouwenhorst methods. 
 + 10/12: Banach's Contraction Mapping Theorem - proof. Blackwell's conditions for contraction. Examples: shortest path, tree cutting. 
 + 5/12: Bellman equation in McCall job search model. Banach's Contraction Mapping Theorem.
 + 3/12: Introduction to dynamic programming: McCall job search model
