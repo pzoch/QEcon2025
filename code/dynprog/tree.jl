@@ -110,7 +110,7 @@ function get_policy(v,model) # this will be used after finding the fixed point o
     return σ = [ (f(s) - c)  >=   1.0/(1.0+r) *  ((1 - p) * v[min(s_index+1,n)] + p * 0.5 * (f(s)-c)) for (s_index,s) in enumerate(s_grid)]
 end
 
-my_tree_death = TreeCuttingProblem(α0 = 0.1, r=0.05, c = 0.15, p = 0.5)
+my_tree_death = TreeCuttingProblem(α0 = 0.1, r=0.05, c = 0.0, p = 0.9)
 
 v_death, σ_death, iter_death, err_death, v_history_death = vfi(my_tree_death)
 plot_v = plot(my_tree_death.s_grid,v_death, label="v(s)",linewidth=4,xlabel = "size",ylabel = "v");
@@ -159,7 +159,7 @@ function vfi(model;maxiter=1000,tol=1e-8) # value function iteration
     return v, σ, iter, err, v_history
 end
 
-my_tree_sick = TreeCuttingProblem(α0 = 0.1, α1 = 2.0, r=0.01, c = 0.0, p = 0.9, q = 0.1)
+my_tree_sick = TreeCuttingProblem(α0 = 0.1, α1 = .25, r=0.01, c = 0.0, p = 0.1, q = 0.0)
 
 v_sick, σ_sick, iter_sick, err_sick, v_history_sick = vfi(my_tree_sick)
 
