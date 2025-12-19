@@ -14,6 +14,7 @@ Office hours: by appointment
 >
 >**PROBLEM SET 3** is available. It is due on **14.01.2026, 11:59 PM**.
 
++ 19/12: Markov Decision Process. Howard's policy iteration. 
 + 17/12: Examples continued: tree cutting, resource extraction.
 + 12/12: Markov chains. Tauchen and Rouwenhorst methods. 
 + 10/12: Banach's Contraction Mapping Theorem - proof. Blackwell's conditions for contraction. Examples: shortest path, tree cutting. 
