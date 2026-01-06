@@ -29,7 +29,7 @@ end
 dice = Categorical([1/6, 1/6, 1/6, 1/6, 1/6, 1/6]); # 6 discrete states and their probabilities
 @show dice
 ## roll a dice 3 times!
-@show rand(dice, 3);
+@show rand(dice, 1);
 
 
 #### EXAMPLE 1: Markov chain - unemployed/employed agent ####
@@ -52,7 +52,7 @@ plot!(sample_path_initU, label = "start unemployed")
 
 ## How does the distribution of employed/unemployed agents evolve over time? 
 
-ψ0 = [0.05 0.95] # let this be the initial distribution  
+ψ0 = [0.9 0.1] # let this be the initial distribution  
 t = 200 # path length
 
 ## Allocate memory
