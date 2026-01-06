@@ -6,7 +6,7 @@ using PrettyTables, Plots, LaTeXStrings, LinearAlgebra, NLsolve, Optim, Roots, C
 f_univariate(x)     = 2x^2+3x+1
 dfdx_univariate(x)  = 4x+3
 
-plot(f_univariate, -2.0, 1.0, label = |L"f(x) = 2x^2+3x+1", xlabel = L"x", ylabel = L"f(x)", title = "Univariate Function", lw = 2)
+plot(f_univariate, -2.0, 1.0, label = L"f(x) = 2x^2+3x+1", xlabel = L"x", ylabel = L"f(x)", title = "Univariate Function", lw = 2)
 plot!(dfdx_univariate, -2.0, 1.0, label = L"f'(x) = 4x+3", lw = 2)
 
 

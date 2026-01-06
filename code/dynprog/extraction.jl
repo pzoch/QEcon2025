@@ -73,7 +73,7 @@ function vfi(model;maxiter=1000,tol=1e-8) # value function iteration
 end
 
 
-my_resource = ResourceExtractionProblem(α0 = 0.1, α1 = 2.25, β = 0.95)
+my_resource = ResourceExtractionProblem(α0 = 0.1, α1 = 2.25, β = 0.01)
 
 v, σ, iter, err, v_history = vfi(my_resource)
 
@@ -96,7 +96,7 @@ plot(plot_v,plot_σ,layout=(1,2),legend=:topleft)
 # sample path of the size of the resource
 
 # draw a random path of prices
-Time = 50
+Time = 15
 
 price_index_path = rand(my_resource.distribution,Time)
 price_level_path = my_resource.p_vals[price_index_path]
