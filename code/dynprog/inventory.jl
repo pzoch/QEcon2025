@@ -149,7 +149,7 @@ function Tσ_operator(v,σ_ind,model)
 
 end
 
-function opi(model; tol = 1e-6, maxiter = 1000, max_m = 15)
+function opi(model; tol = 1e-6, maxiter = 1000, max_m = 2)
 
     (;p, ϕ, X_max, K, c, β, X_vec) = model
     
