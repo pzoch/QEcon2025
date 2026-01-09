@@ -14,6 +14,8 @@ Office hours: by appointment
 >
 >**PROBLEM SET 3** is available. It is due on **14.01.2026, 11:59 PM**.
 
++ 9/1: Dynamic programming with continuous state space.
++ 7/1: Value function iteration - practical exercise. 
 + 19/12: Markov Decision Process. Howard's policy iteration. 
 + 17/12: Examples continued: tree cutting, resource extraction.
 + 12/12: Markov chains. Tauchen and Rouwenhorst methods. 
