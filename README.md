@@ -9,11 +9,9 @@ Office hours: by appointment
 
 
 ## Log and announcements 
+>**PROBLEM SET 4** is available. It is due on **13.02.2026, 11:59 PM**
 
-> [!IMPORTANT]
->
->**PROBLEM SET 3** is available. It is due on **14.01.2026, 11:59 PM**.
-
++ 14/1: Endogenous grid method.
 + 9/1: Dynamic programming with continuous state space.
 + 7/1: Value function iteration - practical exercise. 
 + 19/12: Markov Decision Process. Howard's policy iteration. 
