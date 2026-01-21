@@ -77,7 +77,7 @@ r_min_theory = -model.δ
 
 # Use slightly tighter bounds to avoid numerical issues at extremes
 r_max = r_max_theory - 0.005
-r_min = max(r_min_theory + 0.002, 0.002)
+r_min = max(r_min_theory + 0.001, 0.00)
 
 K_low = capital_demand(r_max, model)  # low K at high r
 K_high = capital_demand(r_min, model)  # high K at low r

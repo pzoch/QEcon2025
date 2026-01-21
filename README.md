@@ -13,6 +13,8 @@ Office hours: by appointment
 >
 >**PROBLEM SET 4** is available. It is due on **13.02.2026, 11:59 PM**
 
++ 21/1: Aiyagari model.
++ 16/1: Stationary equilibrium in a HA model.
 + 14/1: Endogenous grid method.
 + 9/1: Dynamic programming with continuous state space.
 + 7/1: Value function iteration - practical exercise. 
