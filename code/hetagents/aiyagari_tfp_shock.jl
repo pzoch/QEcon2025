@@ -5,21 +5,7 @@
 # - Persistence: ρ = 0.75, so Z_t = 1 + ρ^t * (Z_0 - 1)
 # - Long run: Z → 1, economy returns to original steady state
 # - No display(p1)
-savefig(p1, "tfp_shock_irfs.png")
-println("\nSaved IRF plot to tfp_shock_irfs.png")
 
-# Convergence history - show all iterations with gradient colors
-p_conv = plot(size=(900,500), legend=:outerright, title="Convergence of K path (by iteration)")
-n_hist = length(trans.K_history)
-colors_iter = cgrad(:blues, n_hist, categorical=true)
-for (i, K_iter) in enumerate(trans.K_history)
-    lbl = (i == 1 || i == n_hist) ? "iter $i" : ""
-    plot!(p_conv, t, K_iter, lw=1.2, color=colors_iter[i], alpha=0.8, label=lbl)
-end
-plot!(p_conv, t, trans.K, lw=3, color=:red, label="final")
-hline!(p_conv, [ss.K], ls=:dash, lw=2, color=:black, label="SS")
-xlabel!(p_conv, "t"); ylabel!(p_conv, "K")
-display(p_conv)
 
 ### DISTRIBUTION ANIMATION_w=0, d=0, G=0
 
@@ -340,3 +326,19 @@ gif(anim, "tfp_shock_distribution.gif", fps=10)
 println("Animation saved to tfp_shock_distribution.gif")
 
 println("\n=== Done ===")
+
+savefig(p1, "tfp_shock_irfs.png")
+println("\nSaved IRF plot to tfp_shock_irfs.png")
+
+# Convergence history - show all iterations with gradient colors
+p_conv = plot(size=(900,500), legend=:outerright, title="Convergence of K path (by iteration)")
+n_hist = length(trans.K_history)
+colors_iter = cgrad(:blues, n_hist, categorical=true)
+for (i, K_iter) in enumerate(trans.K_history)
+    lbl = (i == 1 || i == n_hist) ? "iter $i" : ""
+    plot!(p_conv, t, K_iter, lw=1.2, color=colors_iter[i], alpha=0.8, label=lbl)
+end
+plot!(p_conv, t, trans.K, lw=3, color=:red, label="final")
+hline!(p_conv, [ss.K], ls=:dash, lw=2, color=:black, label="SS")
+xlabel!(p_conv, "t"); ylabel!(p_conv, "K")
+display(p_conv)
