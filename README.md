@@ -11,8 +11,8 @@ Office hours: by appointment
 ## Log and announcements 
 > [!IMPORTANT]
 >
->**PROBLEM SET 4** is available. It is due on **13.02.2026, 11:59 PM**
-
+>**FINAL PROJECT** is available. It is due on **06.03.2026, 11:59 PM**
++ 23/1: MIT shocks in HA models. 
 + 21/1: Aiyagari model.
 + 16/1: Stationary equilibrium in a HA model.
 + 14/1: Endogenous grid method.

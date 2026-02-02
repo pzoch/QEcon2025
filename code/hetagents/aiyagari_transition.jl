@@ -72,6 +72,31 @@ resource_gap = trans.Y .- trans.C .- trans.I .- trans.G
 @printf("  At t=T: Y=%.4f, C=%.4f, I=%.4f, G=%.4f, gap=%.6f\n", 
         trans.Y[end], trans.C[end], trans.I[end], trans.G[end], resource_gap[end])
 
+# Government budget check: B_{t+1} = (1+r_t) B_t + G_t - τ_w_t * w_t * L
+println("\nGovernment Budget Check:")
+println("  B_{t+1} = (1+r_t) B_t + G_t - τ_w_t * w_t * L")
+gov_budget_gap = zeros(T)
+for t in 0:(T-1)
+    B_t = B_path[t+1]
+    B_next = B_path[t+2]
+    r_t = trans.r[t+1]
+    G_t = trans.G[t+1]
+    τ_w_t = trans.τ_w[t+1]
+    w_t = trans.w[t+1]
+    
+    # Gov budget: B_{t+1} = (1+r_t) B_t + G_t - τ_w_t * w_t * L + d
+    # Gap should be 0 if satisfied
+    gov_budget_gap[t+1] = B_next - ((1 + r_t) * B_t + G_t - τ_w_t * w_t * model.L + d)
+end
+@printf("  Max |budget gap| = %.6f\n", maximum(abs.(gov_budget_gap)))
+@printf("  d (lump-sum transfer) = %.4f\n", d)
+@printf("  At t=0: B_0=%.2f, B_1=%.2f, r_0=%.4f, G_0=%.4f, τ_w_0=%.4f, gap=%.6f\n",
+        B_path[1], B_path[2], trans.r[1], trans.G[1], trans.τ_w[1], gov_budget_gap[1])
+@printf("  At t=1: B_1=%.2f, B_2=%.2f, r_1=%.4f, G_1=%.4f, τ_w_1=%.4f, gap=%.6f\n",
+        B_path[2], B_path[3], trans.r[2], trans.G[2], trans.τ_w[2], gov_budget_gap[2])
+@printf("  At t=T-1: B=%.2f, r=%.4f, G=%.4f, τ_w=%.4f, gap=%.6f\n",
+        B_path[T], trans.r[T], trans.G[T], trans.τ_w[T], gov_budget_gap[T])
+
 # Terminal check
 println("\nTerminal check:")
 λ_a_T = vec(sum(trans.λ[T+1], dims=2))
